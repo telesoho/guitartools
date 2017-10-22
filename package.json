@@ -1,0 +1,31 @@
+{
+  "name": "guitartools",
+  "version": "1.0.0",
+  "description": "显示文字吉他谱中的和弦按法图，并自动播放歌词。",
+  "main": "index.js",
+  "dependencies": {
+    "howler": "^2.0.5"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.1.6",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
+  },
+  "scripts": {
+    "build-win": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/telesoho/guitartools.git"
+  },
+  "author": "wotiger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/telesoho/guitartools/issues"
+  },
+  "homepage": "https://github.com/telesoho/guitartools#readme"
+}

@@ -1,0 +1,1 @@
+console.log("guitartools 1.0.0");

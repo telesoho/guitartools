@@ -1,11 +1,9 @@
-const autoprefixer = require('autoprefixer');
-
-module.exports = {
-    parser: 'sugarss',
+module.exports = (ctx) => ({
+    //test: console.log(ctx),
+    parser: ctx.parser ? 'sugarss' : false,
+    map: ctx.env === 'development' ? true : false,
     plugins: {
-        autoprefixer,
-        'postcss-import': {},
-        'postcss-cssnext': {},
-        'cssnano': {}
+        'autoprefixer': {},
+        cssnano: ctx.env === 'production' ? {} : false
     }
-};
+});

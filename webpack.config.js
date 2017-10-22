@@ -61,16 +61,15 @@ module.exports = {
                 test: /\.scss$/i,
                 include: ASSETS_PATH,
                 use: extractSCSS.extract([
-                    'style-loader',
+//                    'style-loader',
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
-                ])
+                ]),
             },
             {
                 test: /\.(png|jpg)$/,
-                include: ASSETS_PATH,
-                loader: 'url-loader?limit=40000'
+                loader: 'url-loader?limit=400000'
             }
         ]
     },

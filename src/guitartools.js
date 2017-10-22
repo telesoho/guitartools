@@ -1,13 +1,4 @@
-/**
- * Sum two value.
- * 
- * @param {any} a 
- * @param {any} b 
- * @returns a + b
- */
-function sum(a, b) {
-    return a + b;
-};
+const style = require('../assets/guitartools.scss');
 
 /**
  * 
@@ -21,7 +12,11 @@ class Person {
      * @memberof Person
      */
     print() {
-        console.log("OK");
+        app.innerText = "OK";
     }
 }
-module.exports = sum;
+
+window.addEventListener('load', ()=>{
+    let a = new Person();
+    a.print();
+})

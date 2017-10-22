@@ -33,7 +33,7 @@
     "webpack-dev-server": "^2.9.3"
   },
   "scripts": {
-    "svr": "webpack-dev-server --hot --progress --inline --host 0.0.0.0 --content-base ./dist",
+    "svr": "webpack-dev-server --hot --progress --inline --open",
     "dev": "npm run clean && set NODE_ENV=development & webpack",
     "release": "set NODE_ENV=production & webpack",
     "test": "jest --verbose --coverage",

@@ -29,6 +29,7 @@ module.exports = {
     output: {
         path: BUILD_PATH,
         filename: libraryName + '.min.js',
+        publicPath: '/assets/',
         library: libraryName,
         libraryTarget: 'umd',
         umdNamedDefine: true
@@ -38,7 +39,8 @@ module.exports = {
 
     devServer: {
         publicPath: "/dist/",
-        compress: true,
+        
+        compress: false,
         port: 8080
     },
 
@@ -61,7 +63,6 @@ module.exports = {
                 test: /\.scss$/i,
                 include: ASSETS_PATH,
                 use: extractSCSS.extract([
-//                    'style-loader',
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
@@ -70,6 +71,16 @@ module.exports = {
             {
                 test: /\.(png|jpg)$/,
                 loader: 'url-loader?limit=40000'
+            },
+            {
+                test: /\.(mp3|webm|wav|ogg|mp4|aac|m4a|flac)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: '/assets/[hash].[ext]'
+                    }
+                  }
+                
             }
         ]
     },

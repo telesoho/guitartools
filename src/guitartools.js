@@ -1,4 +1,6 @@
 const style = require('../assets/guitartools.scss');
+const howler = require("howler");
+const SOUND = require("../assets/Idina Menzel - Let It Go.mp3")
 
 /**
  * 
@@ -12,6 +14,8 @@ class Person {
      * @memberof Person
      */
     print() {
+        let music = new Howl({src:[SOUND]});
+        music.play();
         app.innerText = "OK";
     }
 }

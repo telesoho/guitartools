@@ -1,17 +1,23 @@
 var webpack = require('webpack');
 var path = require('path');
-var autoprefixer = require('autoprefixer');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var libraryName = 'guitartools';
 var env = process.env.WEBPACK_ENV;
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'src');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'dist');
+const ASSETS_PATH = path.resolve(ROOT_PATH, 'assets');
 
-var plugins = [];
+// Create multiple instances
+const extractCSS = new ExtractTextPlugin('guitartools-css.css');
+const extractSCSS = new ExtractTextPlugin('guitartools-scss.css');
+
+var plugins = [extractCSS, extractSCSS];
 if (env !== 'dev') {
     plugins.push(
-        new webpack.optimize.UglifyJsPlugin({
+        new UglifyJSPlugin({
             sourceMap: true
         })
     );
@@ -32,27 +38,38 @@ module.exports = {
 
     devServer: {
         publicPath: "/dist/",
+        compress: true,
+        port: 8080
     },
 
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.js$/,
                 loader: 'babel-loader',
                 include: APP_PATH
             },
             {
-                test: /\.scss$/,
-                use: [
+                test: /\.css$/,
+                include: ASSETS_PATH,
+                use: extractCSS.extract([
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader'
+                ])
+            },
+            {
+                test: /\.scss$/i,
+                include: ASSETS_PATH,
+                use: extractSCSS.extract([
                     'style-loader',
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
-                ],
-                include: APP_PATH
+                ])
             },
             {
                 test: /\.(png|jpg)$/,
+                include: ASSETS_PATH,
                 loader: 'url-loader?limit=40000'
             }
         ]

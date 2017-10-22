@@ -1,0 +1,15 @@
+# FILES
+
+.gitignore
+.npmignore
+
+npm-debug.log
+
+# DIRECTORIES
+
+.github
+
+test
+coverage
+doc
+node_modules

@@ -2,10 +2,15 @@
     "presets": [
         ["env", {
             "targets": {
-                "uglify":false, 
+                "uglify": false,
                 "node": "current"
             },
-            "useBuiltIns": true
+            "useBuiltIns": true,
+            "test": {
+                "presets": [
+                    ["es2015"]
+                ]
+            }
         }]
     ]
 }

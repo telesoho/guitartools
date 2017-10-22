@@ -48,7 +48,7 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '#source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -61,14 +61,11 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     new UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
+      sourceMap: false
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-      debug: true,
+      debug: false,
     })
   ])
 }

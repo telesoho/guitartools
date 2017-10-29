@@ -27,12 +27,12 @@ export default {
       let option = {
         src: ['../static/Idina Menzel - Let It Go.mp3'],
         sprite: {
-          one: [0, 450],
-          two: [2000, 250],
-          three: [4000, 350],
-          four: [6000, 380],
-          five: [8000, 340],
-          beat: [10000, 11163]
+          one: [0, 5000],
+          two: [5000, 10000],
+          three: [10000, 15000],
+          four: [15000, 20000],
+          five: [20000, 25000],
+          beat: [25000, 30000]
         }
       }
       this.$data._howl = new Howl(option)

@@ -6,21 +6,29 @@
     <MusicSprite sprite='four'></MusicSprite>
     <MusicSprite sprite='five'></MusicSprite>
     <MusicSprite sprite='beat'></MusicSprite>
+
+    <AudioPlayer :sources="audioSources"></AudioPlayer>
   </div>
+
+
 </template>
 
 <script>
 import MusicSprite from './components/MusicSprite.vue'
+import AudioPlayer from './components/AudioPlayer.vue'
 
 export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      audioSources: [
+        './static/Idina Menzel - Let It Go.mp3'
+      ]
     }
   },
   components: {
-    MusicSprite
+    MusicSprite, AudioPlayer
   },
   methods: {
     say (message) {

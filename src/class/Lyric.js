@@ -6,34 +6,6 @@
 class Lyric {
   lrc = []
 
-  constructor (option) {
-    this.option = option
-  }
-
-  parseUrl (url) {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest()
-      xhr.onreadystatechange = () => {
-        console.log('xhr.onreadystatechange')
-        console.log(XMLHttpRequest.DONE)
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          console.log(xhr.responseText)
-          if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
-            resolve(xhr.responseText)
-          } else {
-            console.log('Request was unsuccessful: ' + xhr.status)
-            reject(new Error('[00:00.00]Not available'))
-          }
-        }
-      }
-      xhr.open('POST', url)
-      xhr.send(null)
-    }).then(result => {
-      this.lrc = this.parse(result)
-      return this.lrc
-    })
-  }
-
   /**
    * Parse lrc, suppose multiple time tag
    *
@@ -71,4 +43,4 @@ class Lyric {
   }
 }
 
-module.exports = Lyric
+export default new Lyric()

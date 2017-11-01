@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AudioPlayer :sources="audioSources"></AudioPlayer>
+    <AudioPlayer :sources="audioSources" :lyricFile='lyricFile'></AudioPlayer>
   </div>
 </template>
 <script>
@@ -11,9 +11,8 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      audioSources: [
-        './static/千住明-涙そうそう.mp3'
-      ]
+      audioSources: ['./static/千住明-涙そうそう.mp3'],
+      lyricFile: './static/千住明-涙そうそう.lrc'
     }
   },
   components: {

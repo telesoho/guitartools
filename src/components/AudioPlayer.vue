@@ -5,27 +5,45 @@
   import axios from 'axios'
 
   export default {
+    props: {
+      'lyricFile': ''
+    },
     mixins: [VueHowler],
     data () {
       return {
         lyric: ''
       }
     },
-    mounted () {
-      this.parseURI('/static/千住明-涙そうそう.lrc')
-      jtab.init(this.$refs.lyric)
+    created () {
+      console.log('created')
+      this.parseURI(this.lyricFile)
     },
-    ready () {
+    watch: {
+    },
+    computed: {
+      lyricHtml () {
+        console.log('computed')
+        return Lyric.parse(this.lyric)
+      }
+    },
+    updated () {
+      console.log('update')
+      if (this.lyric.length > 0) {
+        jtab.renderChord(this.$refs.lyric)
+      }
+    },
+    mounted () {
+      console.log('mounted')
     },
     methods: {
       parseURI (uri) {
         return axios.get(uri)
           .then(response => {
-            this.lyric = Lyric.parse(response.data)
+            this.lyric = response.data
           })
           .catch(error => {
             console.log(error)
-            this.lyric = Lyric.parse('[00:00.00]Not available')
+            this.lyric = '[00:00.00]Not available'
           })
       }
     }
@@ -47,14 +65,14 @@
             <Icon :type="playing ? 'pause' : 'play'" ></Icon>
         </i-circle>
       </Col>
-      <Col :xs="22" :sm="22" :md="22" :lg="22">千住明-涙そうそう</Col>
+      <Col :xs="22" :sm="22" :md="22" :lg="22">{{sources[0]}}</Col>
     </Row>
     <Row type="flex" justify="center" align="middle">
       <Col :xs="23" :sm="23" :md="23" :lg="23">
-      <Scroll :height=600 ref='lyric'>
-          <p class="lyricRow" v-for="lrc in lyric" v-bind:key="lrc.time" v-html="lrc.lrcHtml">
-          </p>
-      </Scroll>
+      <div ref='lyric'>
+          <ul class="lyricRow" v-for="lrc in lyricHtml" :key="lrc.time" v-html="lrc.lrcHtml">
+          </ul>
+      </div>
       </Col>
     </Row>
   </div>

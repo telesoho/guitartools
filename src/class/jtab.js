@@ -544,7 +544,6 @@ Raphael.fn.tab_height = Raphael.fn.tab_spacing * 5
 Raphael.fn.tab_char_width = 8
 
 Raphael.fn.total_height = Raphael.fn.tab_top + Raphael.fn.tab_height + Raphael.fn.margin_bottom
-console.log(Raphael.fn)
 Raphael.fn.color = '#000'
 Raphael.fn.fingering_text_color = '#fff'
 Raphael.fn.tab_text_color = '#000'
@@ -1086,7 +1085,10 @@ jtab.render_implicit = function (withinElement) {
 jtab.renderChord = function (withinElement) {
   withinElement = withinElement || document
   _.each(withinElement.getElementsByClassName('chord'), function (el) {
-    if (el.className.indexOf('rendered') > -1) return
+    if (el.className.indexOf('rendered') > -1) {
+      console.log('rendered')
+      return
+    }
     jtab.render_one_chord(el)
   })
 }
@@ -1101,10 +1103,11 @@ jtab.init = function () {
   window.onload = function () {
     if (typeof oldOnload === 'function') oldOnload()
     // jtab.render_implicit(null)
-    _.each(document.getElementsByClassName('chord'), function (el) {
-      if (el.className.indexOf('rendered') > -1) return
-      jtab.render_one_chord(el)
-    })
+    jtab.renderChord(null)
+    // _.each(document.getElementsByClassName('chord'), function (el) {
+    //   if (el.className.indexOf('rendered') > -1) return
+    //   jtab.render_one_chord(el)
+    // })
   }
 }
 

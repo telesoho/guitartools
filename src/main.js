@@ -6,9 +6,13 @@ import Demo from './Demo'
 import router from './router'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'    // 使用 CSS
+import util from './class/util.js'
 
 Vue.config.productionTip = false
 Vue.use(iView)
+
+Vue.prototype.GLOBAL = util
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

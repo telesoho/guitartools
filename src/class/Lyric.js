@@ -5,7 +5,52 @@
  */
 class Lyric {
   lrc = []
+  parseLrc (lrcLine) {
+    var html = []
+    const regex = /\$([a-zA-Z0-9#:]+)/g
+    let lyricStartPos = 0
+    let m
+    while ((m = regex.exec(lrcLine)) !== null) {
+      // This is necessary to avoid infinite loops with zero-width matches
+      if (m.index === regex.lastIndex) {
+        regex.lastIndex++
+      }
 
+      var lyric = lrcLine.substring(lyricStartPos, m.index)
+      if (lyric.trim().length > 0) {
+        html.push(`<span class="lyric">${lyric}</span>`)
+      } else {
+        if (lyricStartPos !== 0) {
+          html.push(`<span class="lyric">&nbsp;</span>`)
+        }
+      }
+
+      var chord = m[1]
+
+      html.push(`
+      <span class="chordWrap">
+        <ruby>
+          <span class="chord" chord="${chord}"></span>
+          <span style="display: none;">${chord}</span>
+        </ruby>
+      </span>
+      `)
+
+      lyricStartPos = regex.lastIndex
+    }
+
+    if (lyricStartPos < lrcLine.length) {
+      lyric = lrcLine.substring(lyricStartPos, lrcLine.length)
+      if (lyric.trim().length > 0) {
+        html.push(`<span class="lyric">${lyric}</span>`)
+      } else {
+        if (lyricStartPos !== 0) {
+          html.push(`<span class="lyric">&nbsp;</span>`)
+        }
+      }
+    }
+    return html.join('')
+  }
   /**
    * Parse lrc, suppose multiple time tag
    *
@@ -33,7 +78,10 @@ class Lyric {
           const oneTime = /\[(\d{2}):(\d{2})\.(\d{2,3})]/.exec(lrcTimes[j])
           const lrcTime = (oneTime[1]) * 60 + parseInt(oneTime[2]) +
             parseInt(oneTime[3]) / ((oneTime[3] + '').length === 2 ? 100 : 1000)
-          this.lrc.push([lrcTime, lrcText])
+          this.lrc.push({
+            time: lrcTime,
+            lrcHtml: this.parseLrc(lrcText)}
+          )
         }
       }
     }

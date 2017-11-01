@@ -12,9 +12,10 @@
       }
     },
     mounted () {
-      jtab.init()
       this.parseURI('/static/千住明-涙そうそう.lrc')
-      jtab.renderChord(this.$refs.lyc)
+      jtab.init(this.$refs.lyric)
+    },
+    ready () {
     },
     methods: {
       parseURI (uri) {
@@ -32,8 +33,7 @@
 </script>
 
 <template>
-  <div ref='lyc'>
-    
+  <div>
     <Row type="flex" justify="center" align="middle">
       <Col :xs="1" :sm="1" :md="1" :lg="1">
         <i-circle 
@@ -51,27 +51,10 @@
     </Row>
     <Row type="flex" justify="center" align="middle">
       <Col :xs="23" :sm="23" :md="23" :lg="23">
-        <Scroll :height="400">
-          <p class="atfolhyds" v-for="value in lyric" v-bind:key="value[0]">
-            {{ value[1] }}
+      <Scroll :height=600 ref='lyric'>
+          <p class="lyricRow" v-for="lrc in lyric" v-bind:key="lrc.time" v-html="lrc.lrcHtml">
           </p>
-          <p class="atfolhyds">
-              <span class="krijcheug">
-                  <ruby>
-                    <span class="chord" chord="C"></span>
-                    <span style="display: none;">C</span>
-                  </ruby>
-              </span>
-              <span class="mejiowvnz">願</span>
-              <span class="krijcheug" >
-                  <ruby>
-                      <span class="chord" chord="A"></span>
-                      <span style="display: none;">A</span>
-                  </ruby>
-              </span>
-              <span class="mejiowvnz">叶いやしないさ</span>
-          </p>
-        </Scroll>
+      </Scroll>
       </Col>
     </Row>
   </div>
@@ -79,16 +62,22 @@
 </template>
 
 <style>
-    .atfolhyds {
-        line-height:75px;font-weight: bold;color: #b22222;width: 90%;
+    .lyricRow {
+        line-height:75px;font-weight: bold;color: #b22222;
+        margin-top: 20px;
+        margin-left: 34px;
     }
 
-    .krijcheug {
+    .chordWrap {
         position:relative;top:-20px;color: black;line-height:40px;
     }
 
-    .mejiowvnz {
-        position:relative;margin-left:-34px;font-weight: bold;margin-right:5px;
+    .lyric {
+        position:relative;
+        margin-left:-34px;
+        font-weight: bold;
+        font-size:1.5em;
+        margin-right:5px;
     }
 
 </style>

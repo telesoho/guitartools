@@ -17,6 +17,7 @@
   "dependencies": {
     "axios": "^0.17.0",
     "howler": "^2.0.5",
+    "iscroll": "^5.2.0",
     "iview": "^2.6.0",
     "math-clamp": "^1.0.0",
     "object-assign": "^4.1.1",
@@ -24,6 +25,7 @@
     "raphael": "^2.2.7",
     "underscore": "^1.8.3",
     "vue": "^2.5.2",
+    "vue-iscroll-view": "^1.0.3",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

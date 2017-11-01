@@ -1100,7 +1100,7 @@ jtab.init = function () {
   var oldOnload = window.onload
   window.onload = function () {
     if (typeof oldOnload === 'function') oldOnload()
-    jtab.render_implicit(null)
+    // jtab.render_implicit(null)
     _.each(document.getElementsByClassName('chord'), function (el) {
       if (el.className.indexOf('rendered') > -1) return
       jtab.render_one_chord(el)

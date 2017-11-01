@@ -12,7 +12,6 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       audioSources: [
-        // './static/Idina Menzel - Let It Go.mp3',
         './static/千住明-涙そうそう.mp3'
       ]
     }

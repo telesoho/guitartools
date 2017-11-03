@@ -88,7 +88,10 @@ class LyricParser {
       }
     }
     // sort by time
-    lyricData.sort((a, b) => a[0] - b[0])
+    lyricData.sort((a, b) => {
+      var ret = a.time - b.time
+      return ret
+    })
     return lyricData
   }
 }

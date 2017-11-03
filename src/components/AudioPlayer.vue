@@ -36,15 +36,15 @@
       <Col class='playBtn'>
         <i-circle 
           :percent="progress*100" 
-          :size='this.GLOBAL.calc(30)'
-          :trail-width="this.GLOBAL.calc(10)"
-          :stroke-width="this.GLOBAL.calc(10)"
+          :size='this.$util.calc(30)'
+          :trail-width="this.$util.calc(10)"
+          :stroke-width="this.$util.calc(10)"
           @click.native="togglePlayback"
           >
-            <Icon :size="this.GLOBAL.calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
+            <Icon :size="this.$util.calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
         </i-circle>
       </Col>
-      <Col>{{sources[0]}}</Col>
+      <Col>{{sources[0]}} {{seek}}</Col>
     </Row>
     <Row type="flex" justify="center" align="middle">
       <Col :xs="23" :sm="23" :md="23" :lg="23">

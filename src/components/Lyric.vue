@@ -2,7 +2,7 @@
 <template>
   <div ref='lyric' class='lyricWrap'>
     <ul class='scroller'>
-      <p class="lyricRow" :time='lrc.time' v-for="lrc in lyricHtml" :key="lrc.time" v-html="lrc.lrcHtml">
+      <p class="lyricRow" v-touch:press="playFromHere" :time='lrc.time' v-for="lrc in lyricHtml" :key="lrc.time" v-html="lrc.lrcHtml">
       </p>
     </ul>
   </div>
@@ -96,6 +96,11 @@
             var lyricContent = '[00:00.00]Not available'
             this.lyricData = LyricParser.parse(lyricContent)
           })
+      },
+      playFromHere (ev) {
+        var element = ev.target
+        var time = Number(element.getAttribute('time'))
+        this.$emit('playFromHere', time)
       }
     }
   }

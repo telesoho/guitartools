@@ -29,6 +29,10 @@
       console.log('mounted')
     },
     methods: {
+      playFromHere (time) {
+        this.setSeek(time)
+        this.play()
+      }
     }
   }
 </script>
@@ -39,12 +43,12 @@
       <Col class='playBtn'>
         <i-circle 
           :percent="progress*100" 
-          :size='this.$util.calc(30)'
-          :trail-width="this.$util.calc(10)"
-          :stroke-width="this.$util.calc(10)"
+          :size='this.$calc(30)'
+          :trail-width="this.$calc(10)"
+          :stroke-width="this.$calc(10)"
           @click.native="togglePlayback"
           >
-            <Icon :size="this.$util.calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
+            <Icon :size="this.$calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
         </i-circle>
         <Button type="ghost" shape="circle" @click.native="toggleLoop" :icon="beLoop ? 'loop' : 'refresh'"></Button>
         <Button type="ghost" shape="circle" @click.native="toggleMute" :icon="muted ? 'android-volume-off' : 'android-volume-up'"></Button>
@@ -53,7 +57,7 @@
     </Row>
     <Row type="flex" justify="center" align="middle">
       <Col :xs="23" :sm="23" :md="23" :lg="23">
-        <Lyric :lyricSrc='this.lyricFile' :seek='seek'></Lyric>
+        <Lyric :lyricSrc='this.lyricFile' :seek='seek' v-on:playFromHere="playFromHere"></Lyric>
       </Col>
     </Row>
   </div>

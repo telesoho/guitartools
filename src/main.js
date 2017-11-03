@@ -6,14 +6,12 @@ import Demo from './Demo'
 import router from './router'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'    // 使用 CSS
-import util from './class/util.js'
-import IScroll from 'iscroll'
+// import util from './class/util.js'
+import vutil from './class/vutil'
 
 Vue.config.productionTip = false
 Vue.use(iView)
-
-Vue.prototype.$util = util
-Vue.prototype.$IScroll = IScroll
+Vue.use(vutil, { someOption: true })
 
 /* eslint-disable no-new */
 new Vue({

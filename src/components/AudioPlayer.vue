@@ -46,6 +46,8 @@
           >
             <Icon :size="this.$util.calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
         </i-circle>
+        <Button type="ghost" shape="circle" @click.native="toggleLoop" :icon="beLoop ? 'loop' : 'refresh'"></Button>
+        <Button type="ghost" shape="circle" @click.native="toggleMute" :icon="muted ? 'android-volume-off' : 'android-volume-up'"></Button>
       </Col>
       <Col>{{songTitle}}</Col>
     </Row>

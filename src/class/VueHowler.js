@@ -81,6 +81,7 @@ export default {
        * The duration of the audio in seconds
        */
       duration: 0,
+      beLoop: false,
       /**
        * Functions that poll the Howl instance
        * to update various data
@@ -357,12 +358,16 @@ export default {
      * @param {Number} rate - The new rate.
      * The value is clamped between 0.5 and 4
      */
-    setRate  (rate) {
+    setRate (rate) {
       if (typeof rate !== 'number') {
         throw new Error(`rate must be a number, got a ${typeof rate} instead`)
       }
 
       this.$data._howl.rate(clamp(rate, 0.5, 4))
+    },
+    toggleLoop () {
+      this.beLoop = !this.beLoop
+      this.$data._howl.loop(this.beLoop)
     },
     /**
      * Set the position of the playback

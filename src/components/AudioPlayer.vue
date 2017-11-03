@@ -30,8 +30,8 @@
     },
     methods: {
       playFromHere (time) {
+        console.log(time)
         this.setSeek(time)
-        this.play()
       }
     }
   }

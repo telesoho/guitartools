@@ -43,12 +43,11 @@
     watch: {
       seek (newValue, oldValue) {
         var self = this
-        var getNextTime = function (index) {
-          var nextIndex = index + 1
-          if (nextIndex < self.lyricData.length) {
-            return self.lyricData[nextIndex].time
+        var getTime = function (index) {
+          if (index >= self.lyricData.length) {
+            index = self.lyricData.length - 1
           }
-          return Number.MAX_VALUE
+          return self.lyricData[index].time
         }
 
         var scrollTo = function (showTime) {
@@ -60,18 +59,19 @@
           self.iscroll.scrollToElement(e, 1000, null, true)
         }
 
-        if (!this.showingTime || newValue < oldValue) {
-          this.showingTime = getNextTime(0)
-          scrollTo(this.showingTime)
-          return
+        if (!this.showingTime) {
+          this.showingTime = getTime(0)
         }
 
-        if (newValue + 1 > this.showingTime) {
+        if (Math.abs(newValue - this.showingTime) > 1) {
           for (var i = this.lyricData.length - 1; i > 0; i--) {
             var lrc = this.lyricData[i]
-            if (newValue > lrc.time) {
-              this.showingTime = getNextTime(i)
-              scrollTo(lrc.time)
+            if (newValue >= lrc.time) {
+              var newShowingTime = getTime(i)
+              if (newShowingTime !== this.showingTime) {
+                this.showingTime = newShowingTime
+                scrollTo(newShowingTime)
+              }
               return
             }
           }
@@ -98,9 +98,18 @@
           })
       },
       playFromHere (ev) {
-        var element = ev.target
-        var time = Number(element.getAttribute('time'))
-        this.$emit('playFromHere', time)
+        // 寻找包含time属性的节点
+        var e = ev.target
+        while (e && !e.getAttribute('time')) {
+          e = e.parentElement
+        }
+        var strTime = e.getAttribute('time')
+        if (strTime === null) {
+          console.log('WARN:Can not found the element contain time attribute')
+        } else {
+          var time = Number(strTime)
+          this.$emit('playFromHere', time)
+        }
       }
     }
   }

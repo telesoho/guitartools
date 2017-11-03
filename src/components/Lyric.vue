@@ -2,7 +2,7 @@
 <template>
   <div ref='lyric' class='lyricWrap'>
     <ul class='scroller'>
-      <p class="lyricRow" v-for="lrc in lyricHtml" :key="lrc.time" v-html="lrc.lrcHtml">
+      <p class="lyricRow" :time='lrc.time' v-for="lrc in lyricHtml" :key="lrc.time" v-html="lrc.lrcHtml">
       </p>
     </ul>
   </div>
@@ -15,7 +15,8 @@
 
   export default {
     props: {
-      lyricSrc: [String]
+      lyricSrc: [String],
+      seek: Number
     },
     data () {
       return {
@@ -37,6 +38,44 @@
     computed: {
       lyricHtml () {
         return this.lyricData
+      }
+    },
+    watch: {
+      seek (newValue, oldValue) {
+        var self = this
+        var getNextTime = function (index) {
+          var nextIndex = index + 1
+          if (nextIndex < self.lyricData.length) {
+            return self.lyricData[nextIndex].time
+          }
+          return Number.MAX_VALUE
+        }
+
+        var scrollTo = function (showTime) {
+          if (!showTime) {
+            return
+          }
+          var qs = `.lyricRow[time='${showTime}']`
+          var e = self.$refs.lyric.querySelector(qs)
+          self.iscroll.scrollToElement(e, 1000, null, true)
+        }
+
+        if (!this.showingTime || newValue < oldValue) {
+          this.showingTime = getNextTime(0)
+          scrollTo(this.showingTime)
+          return
+        }
+
+        if (newValue + 1 > this.showingTime) {
+          for (var i = this.lyricData.length - 1; i > 0; i--) {
+            var lrc = this.lyricData[i]
+            if (newValue > lrc.time) {
+              this.showingTime = getNextTime(i)
+              scrollTo(lrc.time)
+              return
+            }
+          }
+        }
       }
     },
     updated () {

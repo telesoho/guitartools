@@ -19,6 +19,9 @@
     watch: {
     },
     computed: {
+      songTitle () {
+        return this.sources[0]
+      }
     },
     updated () {
     },
@@ -44,11 +47,11 @@
             <Icon :size="this.$util.calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
         </i-circle>
       </Col>
-      <Col>{{sources[0]}} {{seek}}</Col>
+      <Col>{{songTitle}}</Col>
     </Row>
     <Row type="flex" justify="center" align="middle">
       <Col :xs="23" :sm="23" :md="23" :lg="23">
-        <Lyric :lyricSrc='this.lyricFile' ></Lyric>
+        <Lyric :lyricSrc='this.lyricFile' :seek='seek'></Lyric>
       </Col>
     </Row>
   </div>

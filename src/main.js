@@ -12,6 +12,12 @@ Vue.config.productionTip = false
 Vue.use(iView)
 Vue.use(vutil, { someOption: true })
 
+// Prevents "elastic scrolling" on Safari
+document.addEventListener('touchmove', function (event) {
+  'use strict'
+  event.preventDefault()
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

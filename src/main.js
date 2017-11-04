@@ -1,16 +1,15 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-// import App from './App'
-import Demo from './Demo'
+import App from './App'
 import router from './router'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'    // 使用 CSS
-import vutil from './class/vutil'
+import telesoho from './components'
 
 Vue.config.productionTip = false
 Vue.use(iView)
-Vue.use(vutil, { someOption: true })
+Vue.use(telesoho)
 
 // Prevents "elastic scrolling" on Safari
 document.addEventListener('touchmove', function (event) {
@@ -22,6 +21,6 @@ document.addEventListener('touchmove', function (event) {
 new Vue({
   el: '#app',
   router,
-  template: '<Demo/>',
-  components: { Demo }
+  template: '<App/>',
+  components: { App }
 })

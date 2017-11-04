@@ -35,6 +35,7 @@
 
     if (this.props.injectBaseCSS) {
       css = getBaseCss(this.props)
+      console.log(css)
       injectCss(css, this.props.elements.styleSheet)
     }
 

@@ -6,7 +6,7 @@
 
 <script>
 
-import SoundSprite from '../class/SoundSprite.js'
+import SoundSprite from './SoundSprite.js'
 
 export default {
   mixins: [SoundSprite]

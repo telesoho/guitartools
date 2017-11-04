@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import BloomMenu from '@/components/BloomMenu'
+import BloomMenu from '../components/BloomMenu'
 
 Vue.use(Router)
 

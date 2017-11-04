@@ -2,7 +2,7 @@
 <template>
   <div ref='lyric' class='lyricWrap'>
     <ul class='scroller'>
-      <p class="lyricRow" v-touch:press="playFromHere" :time='lrc.time' v-for="lrc in lyricHtml" :key="lrc.time" v-html="lrc.lrcHtml">
+      <p class="lyricRow" v-touch:press="playFromHere" v-touch:swipeleft="onPanLeft" v-touch:swiperight="onPanRight" :time='lrc.time' v-for="lrc in lyricHtml" :key="lrc.time" v-html="lrc.lrcHtml">
       </p>
     </ul>
   </div>
@@ -97,40 +97,61 @@
             this.lyricData = LyricParser.parse(lyricContent)
           })
       },
+      getContainTimeAttrElement (targetElement) {
+        while (targetElement && !targetElement.getAttribute('time')) {
+          targetElement = targetElement.parentElement
+        }
+        return targetElement
+      },
+      onPanRight (ev) {
+        console.log(ev)
+        var timeElement = this.getContainTimeAttrElement(ev.target)
+        if (!timeElement) {
+          return
+        }
+        this.$toggleClass(timeElement, 'repeat')
+      },
+      onPanLeft (ev) {
+        console.log(ev)
+        var timeElement = this.getContainTimeAttrElement(ev.target)
+        if (!timeElement) {
+          return
+        }
+        this.$toggleClass(timeElement, 'repeat')
+      },
       playFromHere (ev) {
         // 寻找包含time属性的节点
-        var e = ev.target
-        while (e && !e.getAttribute('time')) {
-          e = e.parentElement
+        var timeElement = this.getContainTimeAttrElement(ev.target)
+        if (!timeElement) {
+          return
         }
-        var strTime = e.getAttribute('time')
-        if (strTime === null) {
-          console.log('WARN:Can not found the element contain time attribute')
-        } else {
-          var time = Number(strTime)
-          this.$emit('playFromHere', time)
-        }
+        var strTime = timeElement.getAttribute('time')
+        var time = Number(strTime)
+        this.$emit('playFromHere', time)
       }
     }
   }
 </script>
 
-
-<style>
+<style lang='scss'>
   .lyricWrap {
     /* -- Attention: This line is extremely important in chrome 55+! -- */
     touch-action: none;
     /* -- Attention-- */
-    height: 400px; /* 必须要设定该值，否则滚动条不起作用 */
+    height: 500px; /* 必须要设定该值，否则滚动条不起作用 */
     overflow: hidden;
   }
 
   .lyricRow {
-      line-height:75px;
-      font-weight: bold;
-      color: #b22222;
-      margin-top: 20px;
-      margin-left: 34px;
+    line-height:75px;
+    font-weight: bold;
+    color: #b22222;
+    margin-top: 20px;
+    margin-left: 34px;
+  }
+
+  .repeat {
+    background-color: lightskyblue;
   }
 
   .chordWrap {

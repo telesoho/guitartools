@@ -5,7 +5,14 @@ var devicePixelRatio = window.devicePixelRatio ||
   window.matchMedia('(min-resolution: 2dppx), (-webkit-min-device-pixel-ratio: 1.5),(-moz-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)').matches ? 2 : 1) ||
    1
 var Hammer = typeof require === 'function' ? require('hammerjs') : window.Hammer
-var gestures = ['tap', 'pan', 'pinch', 'press', 'rotate', 'swipe']
+var gestures = [
+  'tap',
+  'pinch', /* 'pinchstart', 'pinchmove', 'pinchend', 'pinchcancel', 'pinchin', 'pinchout', */
+  'press', 'pressup',
+  'rotate', /* 'rotatestart', 'rotatemove', 'rotateend', 'rotatecancel', */
+  'swipe', 'swipeleft', 'swiperight', 'swipeup', 'swipedown',
+  'pan', 'panleft', 'panright', 'panup', 'pandown'
+]
 var directions = ['up', 'down', 'left', 'right', 'horizontal', 'vertical', 'all']
 // var customEvents = {}
 
@@ -24,6 +31,7 @@ function guardDirections (options) {
     }
   }
 }
+
 export default {
   install (Vue, options) {
     console.log('install plugin')
@@ -37,7 +45,6 @@ export default {
     Vue.directive('touch', {
       bind (el, binding, vnode, oldVnode) {
         // console.log('bind', el, binding, vnode, oldVnode)
-        // 逻辑...
         if (!el.hammer) {
           el.hammer = new Hammer.Manager(el)
         }
@@ -118,9 +125,21 @@ export default {
         // 逻辑...
       }
     })
+
     // 4. 添加实例方法
     Vue.prototype.$calc = function (px) {
       return px * devicePixelRatio
+    }
+
+    Vue.prototype.$toggleClass = function (element, className) {
+      var classList = element.className.split(/\s+/)
+      var index = classList.indexOf(className)
+      if (index === -1) {
+        classList.push(className)
+      } else {
+        classList.splice(index)
+      }
+      element.className = classList.join(' ')
     }
 
     Vue.prototype.$IScroll = IScroll

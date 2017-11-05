@@ -33,10 +33,10 @@
             <Icon :size="this.$calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
       </i-circle>
       <BloomItem slot='BloomItems' name='loop'>
-        <Button slot='button' type="ghost" shape="circle" @click.native="toggleLoop" :icon="this.$store.state.beLoop ? 'loop' : 'refresh'"></Button>
+        <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" @click.native="toggleLoop" :icon="this.$store.state.beLoop ? 'loop' : 'refresh'"></Button>
       </BloomItem>
       <BloomItem slot='BloomItems' name='muted'>
-        <Button slot='button' type="ghost" shape="circle" @click.native="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
+        <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" @click.native="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
       </BloomItem>
     </BloomMenu>
   </div>

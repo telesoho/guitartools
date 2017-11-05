@@ -64,15 +64,9 @@ export default {
       this.state = isOpen ? 'open' : 'close'
       var item = this.$el
       if (isOpen) {
-        console.log('isOpen', item)
-        utils.setAttribute(item, 'state', 'is-active')
-        // item.classList.remove('is-selected')
-        // item.classList.add('is-active')
+        utils.setAttribute(item, 'state', 'expand')
       } else {
-        console.log('isClosed', item)
-        utils.setAttribute(item, 'state', 'is-selected')
-        // item.classList.remove('is-active')
-        // item.classList.add('is-selected')
+        utils.setAttribute(item, 'state', 'fold')
       }
     })
   }

@@ -9,7 +9,7 @@
 
 .blooming-menu__container {
   position: absolute;
-  left: 80%;
+  left: 90%;
   top: 90%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -28,9 +28,13 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  list-style-type: none;  
 }
 
-.blooming-menu__main {
+.blooming-menu__main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -43,68 +47,4 @@
   color: white;
 }
 
-.blooming-menu__main:hover {
-  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2);
-}
-
-.blooming-menu__main.is-active {
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-.blooming-menu__main-content {
-  line-height: 60%;
-  position: relative;
-}
-
-.blooming-menu__main.is-active .blooming-menu__main-content {
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-.blooming-menu__item {
-  position: absolute;
-  bottom: 5px;
-  left: 5px;
-  transition: -webkit-transform .28s cubic-bezier(.4, 0, .2, 1), box-shadow .28s cubic-bezier(.4, 0, .2, 1), opacity .28s cubic-bezier(.4, 0, .2, 1);
-  transition: transform .28s cubic-bezier(.4, 0, .2, 1), box-shadow .28s cubic-bezier(.4, 0, .2, 1), opacity .28s cubic-bezier(.4, 0, .2, 1);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.blooming-menu__item:hover {
-  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2);
-}
-
-.blooming-menu__item.is-selected:hover {
-  box-shadow: 0 0 0 0;
-  transition: box-shadow 0s;
-}
-
-.blooming-menu__items {
-  list-style-type: none;
-}
-
-.blooming-menu__item-btn-wrapper {
-  width: 100%;
-  height: 100%;
-  background-color: #6B9EB8;
-  border-radius: 50%;
-}
-
-.blooming-menu__item-btn {
-  cursor: pointer;
-  border-radius: 50%;
-  border: none;
-  background-color: transparent;
-  width: 100%;
-  height: 100%;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
-  transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1), opacity .28s cubic-bezier(.4, 0, .2, 1);
-  background-size: 50%;
-  background-position: center center;
-  background-repeat: no-repeat;
-  opacity: 0.8;
-}
 

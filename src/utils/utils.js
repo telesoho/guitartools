@@ -9,6 +9,13 @@ export function toggleAttribute (el, attr) {
   }
 }
 
+export function removeAttribute (el, attr) {
+  if (el.hasAttribute(attr)) {
+    el.removeAttribute(attr)
+    return false
+  }
+}
+
 export function setAttribute (el, attr, value) {
   if (el.hasAttribute(attr)) {
     el.setAttribute(attr, value)

@@ -32,8 +32,12 @@ export default {
     margin-left: 34px;
   }
 
-  .repeat {
+  .lyricRow[repeat=true] {
     background-color: lightskyblue;
+  }
+
+  .lyricRow[repeat=false] {
+    background-color: lightseagreen;
   }
 
   .chordWrap {

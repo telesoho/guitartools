@@ -12,8 +12,8 @@
           >
             <Icon :size="this.$calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
         </i-circle>
-        <Button type="ghost" shape="circle" @click.native="toggleLoop" :icon="beLoop ? 'loop' : 'refresh'"></Button>
-        <Button type="ghost" shape="circle" @click.native="toggleMute" :icon="muted ? 'android-volume-off' : 'android-volume-up'"></Button>
+        <Button type="ghost" shape="circle" @click.native="toggleLoop" :icon="this.$store.state.beLoop ? 'loop' : 'refresh'"></Button>
+        <Button type="ghost" shape="circle" @click.native="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
       </Col>
       <Col>{{songTitle}}</Col>
     </Row>
@@ -33,9 +33,16 @@
             <Icon :size="this.$calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
       </i-circle> -->
       <span slot='main'>+</span>
-      <BloomItem slot='BloomItems' v-for="item in bloomItem" v-bind:key="item.name"
+      <!-- <BloomItem slot='BloomItems' v-for="item in bloomItem" v-bind:key="item.name"
         :name="item.name" >
         <Button slot='button' type="ghost" shape="circle" @click.native="item.onTap" :icon="item.icon"></Button>
+      </BloomItem> -->
+
+      <BloomItem slot='BloomItems' name='loop'>
+        <Button slot='button' type="ghost" shape="circle" @click.native="toggleLoop" :icon="this.$store.state.beLoop ? 'loop' : 'refresh'"></Button>
+      </BloomItem>
+      <BloomItem slot='BloomItems' name='muted'>
+        <Button slot='button' type="ghost" shape="circle" @click.native="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
       </BloomItem>
     </BloomMenu>
   </div>

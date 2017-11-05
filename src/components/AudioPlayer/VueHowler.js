@@ -338,6 +338,7 @@ export default {
     toggleMute () {
       this.$data._howl.mute(!this.muted)
       this.muted = !this.muted
+      this.$store.commit('setMuted', this.muted)
     },
     /**
      * Set the volume of the playback
@@ -368,6 +369,7 @@ export default {
     toggleLoop () {
       this.beLoop = !this.beLoop
       this.$data._howl.loop(this.beLoop)
+      this.$store.commit('setLoop', this.beLoop)
     },
     /**
      * Set the position of the playback

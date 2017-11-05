@@ -6,9 +6,11 @@ import router from './router'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'    // 使用 CSS
 import telesoho from './components'
+import Vuex from 'vuex'
 
 Vue.config.productionTip = false
 Vue.use(iView)
+Vue.use(Vuex)
 Vue.use(telesoho)
 
 // Prevents "elastic scrolling" on Safari
@@ -17,9 +19,25 @@ document.addEventListener('touchmove', function (event) {
   event.preventDefault()
 })
 
+const store = new Vuex.Store({
+  state: {
+    muted: false,
+    beLoop: false
+  },
+  mutations: {
+    setMuted (state, muted) {
+      this.state.muted = muted
+    },
+    setLoop (state, loop) {
+      this.state.beLoop = loop
+    }
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   template: '<App/>',
   components: { App }

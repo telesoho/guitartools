@@ -247,6 +247,7 @@ export default {
       //   'reverse', { duration: 500 },
       //   { complete: 'done' })
       this.state.isOpen = !this.state.isOpen
+      console.log(this.$store)
       this.broadcast('BloomItem', 'onOpenStateChanged', this.state.isOpen)
     }
   }

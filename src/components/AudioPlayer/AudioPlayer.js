@@ -15,12 +15,12 @@ export default {
       bloomItem: [
         {
           name: 'muted',
-          icon: this.muted ? 'android-volume-off' : 'android-volume-up',
+          icon: this.$store.state.muted ? 'android-volume-off' : 'android-volume-up',
           onTap: this.toggleMute
         },
         {
           name: 'loop',
-          icon: this.beLoop ? 'loop' : 'refresh',
+          icon: this.$store.state.beLoop ? 'loop' : 'refresh',
           onTap: this.toggleLoop
         }
       ]
@@ -28,8 +28,6 @@ export default {
   },
   created () {
     console.log('created')
-  },
-  watch: {
   },
   computed: {
     songTitle () {

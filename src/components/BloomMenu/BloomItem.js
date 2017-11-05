@@ -1,4 +1,6 @@
 import Emitter from '../../mixins/emitter'
+import * as utils from '../../utils/utils'
+
 const prefixCls = 'blooming-menu__'
 
 export default {
@@ -62,11 +64,15 @@ export default {
       this.state = isOpen ? 'open' : 'close'
       var item = this.$el
       if (isOpen) {
-        item.classList.remove('is-selected')
-        item.classList.add('is-active')
+        console.log('isOpen', item)
+        utils.setAttribute(item, 'state', 'is-active')
+        // item.classList.remove('is-selected')
+        // item.classList.add('is-active')
       } else {
-        item.classList.remove('is-active')
-        item.classList.add('is-selected')
+        console.log('isClosed', item)
+        utils.setAttribute(item, 'state', 'is-selected')
+        // item.classList.remove('is-active')
+        // item.classList.add('is-selected')
       }
     })
   }

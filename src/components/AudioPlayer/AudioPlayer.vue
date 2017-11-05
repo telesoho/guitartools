@@ -3,7 +3,7 @@
   <div>
     <Row type="flex" justify="center" align="middle">
       <Col class='playBtn'>
-        <i-circle 
+        <!-- <i-circle 
           :percent="progress*100" 
           :size='this.$calc(30)'
           :trail-width="this.$calc(10)"
@@ -11,7 +11,7 @@
           @click.native="togglePlayback"
           >
             <Icon :size="this.$calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
-        </i-circle>
+        </i-circle> -->
         <Button type="ghost" shape="circle" @click.native="toggleLoop" :icon="this.$store.state.beLoop ? 'loop' : 'refresh'"></Button>
         <Button type="ghost" shape="circle" @click.native="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
       </Col>
@@ -23,7 +23,7 @@
       </Col>
     </Row>
     <BloomMenu style=".blooming-menu">
-      <!-- <i-circle slot='main'
+      <i-circle slot='main'
           :percent="progress*100" 
           :size='this.$calc(30)'
           :trail-width="this.$calc(10)"
@@ -31,13 +31,7 @@
           v-touch:tap="togglePlayback"
           >
             <Icon :size="this.$calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
-      </i-circle> -->
-      <span slot='main'>+</span>
-      <!-- <BloomItem slot='BloomItems' v-for="item in bloomItem" v-bind:key="item.name"
-        :name="item.name" >
-        <Button slot='button' type="ghost" shape="circle" @click.native="item.onTap" :icon="item.icon"></Button>
-      </BloomItem> -->
-
+      </i-circle>
       <BloomItem slot='BloomItems' name='loop'>
         <Button slot='button' type="ghost" shape="circle" @click.native="toggleLoop" :icon="this.$store.state.beLoop ? 'loop' : 'refresh'"></Button>
       </BloomItem>

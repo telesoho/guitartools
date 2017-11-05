@@ -22,34 +22,15 @@ export default {
     }
   },
   created () {
-    // if (!this.bloomingMenu) {
-    //   this.bloomingMenu = new BloomMenu({
-    //     startAngle: 180,
-    //     endAngle: 180 + 90,
-    //     radius: 80,
-    //     itemsNum: 4,
-    //     itemAnimationDelay: 0.08
-    //   })
-    //   this.bloomingMenu.render()
-    // }
   },
   mounted () {
     if (!this.$slots.BloomItems) {
       console.log('ERROR: you must define some item.')
     }
-    // this.setAnimation(this.$props)
-    console.log(this.$slots.BloomItems)
   },
-  // beforUpdate () {
-  //   console.log('beforUpdate', this.$slots.main[0])
-  // },
   updated () {
     // console.log('updated', this.$slots.main[0])
   },
-  // render (createElement) {
-  //   console.log('render', this.$slots.main)
-  //   return createElement('div', this.$slots.main)
-  // },
   methods: {
     setAnimation (props) {
       function toRadians (angle) {
@@ -247,7 +228,7 @@ export default {
       //   'reverse', { duration: 500 },
       //   { complete: 'done' })
       this.state.isOpen = !this.state.isOpen
-      console.log(this.$store)
+      console.log(this.state.isOpen)
       this.broadcast('BloomItem', 'onOpenStateChanged', this.state.isOpen)
     }
   }

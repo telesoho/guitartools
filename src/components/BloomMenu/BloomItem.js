@@ -1,5 +1,5 @@
 import Emitter from '../../mixins/emitter'
-const prefixCls = 'ivu-menu'
+const prefixCls = 'blooming-menu__'
 
 export default {
   name: 'MenuItem',
@@ -16,7 +16,8 @@ export default {
   },
   data () {
     return {
-      active: false
+      active: false,
+      state: 'close'
     }
   },
   computed: {
@@ -53,9 +54,19 @@ export default {
     this.$on('on-update-active-name', name => {
       if (this.name === name) {
         this.active = true
-        this.dispatch('Submenu', 'on-update-active-name', true)
       } else {
         this.active = false
+      }
+    })
+    this.$on('onOpenStateChanged', isOpen => {
+      this.state = isOpen ? 'open' : 'close'
+      var item = this.$el
+      if (isOpen) {
+        item.classList.remove('is-selected')
+        item.classList.add('is-active')
+      } else {
+        item.classList.remove('is-active')
+        item.classList.add('is-selected')
       }
     })
   }

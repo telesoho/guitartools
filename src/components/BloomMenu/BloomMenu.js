@@ -1,5 +1,5 @@
 // import * as BloomMenu from '../class/bloom-menu'
-
+// import velocity from 'velocity-animate'
 const cssClassPrefix = 'blooming-menu__'
 
 export default {
@@ -34,25 +34,30 @@ export default {
     // }
   },
   mounted () {
-    if (!this.$slots.item) {
+    if (!this.$slots.BloomItems) {
       console.log('ERROR: you must define some item.')
-      return
     }
-    this.setAnimation(this.$props)
-    // this.$slots.default.forEach(vnode => {
-    //   // if (vnode.tag.indexOf('a-child-component') > -1) {
-    //   //    vnode.elm.addEventListener('click', this.handleClick, true) // <-- NATIVE event :-(
-    //   // }
-    //   console.log(vnode)
-    // })
+    // this.setAnimation(this.$props)
+    console.log(this.$slots.BloomItems)
   },
+  // beforUpdate () {
+  //   console.log('beforUpdate', this.$slots.main[0])
+  // },
+  updated () {
+    // console.log('updated', this.$slots.main[0])
+  },
+  // render (createElement) {
+  //   console.log('render', this.$slots.main)
+  //   return createElement('div', this.$slots.main)
+  // },
   methods: {
     setAnimation (props) {
       function toRadians (angle) {
         return angle * (Math.PI / 180)
       }
       props = this.$props
-      props.itemsNum = this.$slots.item.length
+      var items = this.$slots.BloomItems
+      props.itemsNum = items.length
 
       var ITEM_CSS_CLASS = 'item'
       var ITEM_BTN_WRAPPER_CSS_CLASS = 'item-btn-wrapper'
@@ -62,7 +67,7 @@ export default {
       var angleCur = props.startAngle
       var cssRules = ''
 
-      this.$slots.item.forEach(function (item, index) {
+      items.forEach(function (item, index) {
         var x = props.radius * Math.cos(toRadians(angleCur))
         var y = props.radius * Math.sin(toRadians(angleCur))
         var x3 = Number((x).toFixed(2))
@@ -231,19 +236,18 @@ export default {
         '}'
 
       // console.log('cssRules\r\n', cssRules)
-      console.log(this.$slots.item)
-      this.$slots.item.styleSheet += cssRules
+      // console.log(this.$slots.item)
+      this.$el.styleSheet += cssRules
     },
-    open () {
-      console.log('open items')
-      this.$slots.top.main.classList.add('is-active')
-      this.props.elements.items.forEach(function (item) {
-        item.style.display = 'block'
-        item.classList.remove('is-selected')
-        item.classList.add('is-active')
-      })
-      this.state.isOpen = true
-      return this
+    onOpen () {
+      // this.state.isOpen = true
+      // velocity(this.$el,
+      //   { opacity: 1, width: 100 },
+      //   { duration: 600 },
+      //   'reverse', { duration: 500 },
+      //   { complete: 'done' })
+      this.state.isOpen = !this.state.isOpen
+      this.broadcast('BloomItem', 'onOpenStateChanged', this.state.isOpen)
     }
   }
 }

@@ -22,8 +22,8 @@
         <Lyric :lyricSrc='this.lyricFile' :seek='seek' v-on:playFromHere="playFromHere"></Lyric>
       </Col>
     </Row>
-    <BloomMenu>
-      <i-circle slot='main'
+    <BloomMenu style=".blooming-menu">
+      <!-- <i-circle slot='main'
           :percent="progress*100" 
           :size='this.$calc(30)'
           :trail-width="this.$calc(10)"
@@ -31,20 +31,24 @@
           v-touch:tap="togglePlayback"
           >
             <Icon :size="this.$calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
-      </i-circle>
-      <li slot='item' class="blooming-menu__item" style="opacity: 1; display: block;">
-        <div class="blooming-menu__item-btn-wrapper">
-          <button class="blooming-menu__item-btn"></button>
-        </div>
-      </li>
-      <li slot='item' class="blooming-menu__item" style="opacity: 1; display: block;">
-        <div class="blooming-menu__item-btn-wrapper">
-          <button class="blooming-menu__item-btn"></button>
-        </div>
-      </li>
+      </i-circle> -->
+      <span slot='main'>+</span>
+      <BloomItem slot='BloomItems' v-for="item in bloomItem" v-bind:key="item.name"
+        :name="item.name" >
+        <Button slot='button' type="ghost" shape="circle" @click.native="item.onTap" :icon="item.icon"></Button>
+      </BloomItem>
     </BloomMenu>
   </div>
 </template>
+
+<style lang='scss'>
+  .blooming-menu {
+    left: 90%;
+    top: 90%;
+    bottom: 0px;
+    position: absolute;
+  }
+</style>
 
 <script>
 import AudioPlayer from './AudioPlayer.js'
@@ -54,42 +58,3 @@ export default {
 }
 </script>
 
-
-<style lang='scss'>
-  html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-  }
-  body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-  }
-  body .blooming-menu__container {
-    left: 90%;
-    top: 90%;
-    bottom: 0px;
-    position: absolute;
-  }
-  .blooming-menu__item:nth-of-type(1) .blooming-menu__item-btn {
-    background-image: url(/static/get-app.svg);
-    background-size: 35%;
-  }
-  .blooming-menu__item:nth-of-type(2) .blooming-menu__item-btn {
-    background-image: url(/static/grade.svg);
-  }
-  .blooming-menu__item:nth-of-type(3) .blooming-menu__item-btn {
-    background-image: url(/static/home.svg);
-  }
-  .blooming-menu__item:nth-of-type(4) .blooming-menu__item-btn {
-    background-image: url(/static/lock.svg);
-    background-size: 35%;
-  }
-  .blooming-menu__item-btn:hover {
-    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2);
-    opacity: 1;
-  }
-</style>

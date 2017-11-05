@@ -7,10 +7,23 @@ export default {
     'lyricFile': ''
   },
   mixins: [VueHowler],
-  components: {Lyric, BloomMenu},
+  components: {Lyric, BloomMenu: BloomMenu, BloomItem: BloomMenu.Item},
   data () {
     return {
-      lyric: ''
+      lyric: '',
+      bloomMenuIsOpen: false,
+      bloomItem: [
+        {
+          name: 'muted',
+          icon: this.muted ? 'android-volume-off' : 'android-volume-up',
+          onTap: this.toggleMute
+        },
+        {
+          name: 'loop',
+          icon: this.beLoop ? 'loop' : 'refresh',
+          onTap: this.toggleLoop
+        }
+      ]
     }
   },
   created () {

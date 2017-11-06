@@ -21,16 +21,19 @@
     /* -- Attention-- */
     height: 500px; /* 必须要设定该值，否则滚动条不起作用 */
     overflow: hidden;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .lyricRow {
     line-height:75px;
     font-weight: bold;
     color: #b22222;
-    margin-top: 20px;
-    margin-left: 34px;
+    //margin-top: 20px;
+    // margin-left: 34px;
+    margin-bottom: 20px;
     padding-top: 20px;
-    padding-left: 34px;
+    // padding-left: 34px;
   }
 
   .lyricRow[repeat=true] {
@@ -50,7 +53,7 @@
 
   .lyric {
       position:relative;
-      margin-left:-30px;
+      // margin-left:-30px;
       font-weight: bold;
       font-size:1.0em;
       margin-right:15px;

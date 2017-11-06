@@ -3,6 +3,7 @@ import axios from 'axios'
 import LyricParser from './LyricParser'
 import _ from 'underscore'
 import * as utils from '../../utils/utils'
+import animate from 'velocity-animate'
 
 function getContainTimeAttrElement (targetElement) {
   while (targetElement && !targetElement.getAttribute('time')) {
@@ -78,11 +79,14 @@ export default {
     }
   },
   methods: {
-    getTime (index) {
-      if (index >= this.lyricData.length) {
-        index = this.lyricData.length - 1
+    getElementByTime (time) {
+      var qs = `.lyricRow[time='${time}']`
+      var e = this.$refs.lyric.querySelector(qs)
+      if (!e) {
+        console.log('ERROR: Cannot find the time in lyric')
+        return null
       }
-      return this.lyricData[index].time
+      return e
     },
     scrollTo (showTime) {
       if (!showTime) {
@@ -100,10 +104,18 @@ export default {
       console.log(this.focusIndex, index)
       if (this.focusIndex !== null) {
         this.lyricData[this.focusIndex].focus = false
+        var e = this.getElementByTime(this.lyricData[this.focusIndex].time)
+        animate(e,
+          {scale: 1}, 200
+        )
       }
       this.lyricData[index].focus = true
       this.focusIndex = index
       this.scrollTo(this.lyricData[index].time)
+      e = this.getElementByTime(this.lyricData[this.focusIndex].time)
+      animate(e,
+        {scale: 1.05}, 500
+      )
     },
     loadLyric (uri) {
       return axios.get(uri)
@@ -155,7 +167,7 @@ export default {
       }
     },
     setNewRepeat (newRepeat) {
-      this.clearRepeat()
+      this.clearAttrib('repeat')
       this.repeat = newRepeat
       this.showRepeat()
     },

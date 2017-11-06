@@ -37,12 +37,6 @@
     background-color: lightskyblue;
   }
 
-  .lyricRow[focus=true] {
-    animation-name: playing-focus-in;
-    animation-duration: 5;
-    animation-fill-mode: forwards;
-  }
-
   .lyricRow[repeat=false] {
     background-color: lightseagreen;
   }
@@ -62,29 +56,6 @@
       margin-right:15px;
   }
 
-  @keyframes playing-focus-in {
-    0% {
-      transform: scale(1);
-    }
-    70% {
-      transform: scale(1.2);
-    }
-    100% {
-      transform: scale(1.1);
-    }
-  }
-
-  @keyframes playing-focus-out {
-    0% {
-      transform: scale(1.1);
-    }
-    70% {
-      transform: scale(1.2);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }  
 </style>
 
 <script>

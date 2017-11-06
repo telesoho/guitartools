@@ -1,19 +1,18 @@
 <template>
   <div ref='lyric' class='lyricWrap'>
     <ul class='scroller'>
-      <p class="lyricRow" v-touch:press="playFromHere" v-touch:swipeleft="onPanLeft" v-touch:swiperight="onPanRight" :time='lrc.time' v-for="lrc in lyricHtml" :key="lrc.time" v-html="lrc.lrcHtml">
-      </p>
+      <p class="lyricRow" v-touch:press="playFromHere" 
+        v-touch:swipeleft="onSwipeLeft" 
+        v-touch:swiperight="onSwipeRight" 
+        :time='lrc.time' 
+        v-for="lrc in lyricHtml" 
+        :key="lrc.time"
+        v-html="lrc.lrcHtml"
+        :focus="lrc.focus"
+        ></p>
     </ul>
   </div>
 </template>
-
-<script>
-import Lyric from './Lyric'
-
-export default {
-  mixins: [Lyric]
-}
-</script>
 
 <style lang='scss'>
   .lyricWrap {
@@ -30,10 +29,18 @@ export default {
     color: #b22222;
     margin-top: 20px;
     margin-left: 34px;
+    padding-top: 20px;
+    padding-left: 34px;
   }
 
   .lyricRow[repeat=true] {
     background-color: lightskyblue;
+  }
+
+  .lyricRow[focus=true] {
+    animation-name: playing-focus-in;
+    animation-duration: 5;
+    animation-fill-mode: forwards;
   }
 
   .lyricRow[repeat=false] {
@@ -55,4 +62,35 @@ export default {
       margin-right:15px;
   }
 
+  @keyframes playing-focus-in {
+    0% {
+      transform: scale(1);
+    }
+    70% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes playing-focus-out {
+    0% {
+      transform: scale(1.1);
+    }
+    70% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }  
 </style>
+
+<script>
+import Lyric from './Lyric'
+
+export default {
+  mixins: [Lyric]
+}
+</script>

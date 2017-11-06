@@ -82,7 +82,8 @@ class LyricParser {
             parseInt(oneTime[3]) / ((oneTime[3] + '').length === 2 ? 100 : 1000)
           lyricData.push({
             time: lrcTime,
-            lrcHtml: renderLine(lrcText)
+            lrcHtml: renderLine(lrcText),
+            focus: false
           })
         }
       }

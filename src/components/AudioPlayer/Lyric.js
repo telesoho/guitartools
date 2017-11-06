@@ -18,9 +18,11 @@ export default {
   },
   data () {
     return {
+      focusIndex: null,
       lyricData: [{
         time: 0,
-        lrcHtml: ''
+        lrcHtml: '',
+        focus: false
       }],
       repeat: {
         start: -1,
@@ -46,58 +48,72 @@ export default {
     }
   },
   watch: {
+    // lyricData: {
+    //   handle: function (newValue, oldValue) {
+    //     console.log('lyricData changed', newValue, oldValue)
+    //   },
+    //   deep: true
+    // },
     seek (newValue, oldValue) {
-      var self = this
-      var getTime = function (index) {
-        if (index >= self.lyricData.length) {
-          index = self.lyricData.length - 1
-        }
-        return self.lyricData[index].time
+      if (this.focusIndex === null) {
+        return this.focusIn(0)
       }
 
-      var scrollTo = function (showTime) {
-        if (!showTime) {
-          return
-        }
-        var qs = `.lyricRow[time='${showTime}']`
-        var e = self.$refs.lyric.querySelector(qs)
-        self.iscroll.scrollToElement(e, 1000, null, true)
-      }
-
-      if (!this.showingTime) {
-        this.showingTime = getTime(0)
-      }
-
-      if (Math.abs(newValue - this.showingTime) > 1) {
+      /* While time changed bigger than one second trigger scroll */
+      var focusTime = this.lyricData[this.focusIndex].time
+      if (Math.abs(newValue - focusTime) > 1) {
         for (var i = this.lyricData.length - 1; i > 0; i--) {
           var lrc = this.lyricData[i]
           if (newValue >= lrc.time) {
-            var newShowingTime = getTime(i)
-            if (newShowingTime !== this.showingTime) {
-              this.showingTime = newShowingTime
-              scrollTo(newShowingTime)
-            }
-            return
+            return this.focusIn(i)
           }
         }
       }
     }
   },
   updated () {
-    if (this.lyricData.length > 0) {
+    if (this.lyricData.length > 0 && this.focusIndex === null) {
       jtab.renderChord(this.$refs.lyric)
       this.iscroll.refresh()
     }
   },
   methods: {
+    getTime (index) {
+      if (index >= this.lyricData.length) {
+        index = this.lyricData.length - 1
+      }
+      return this.lyricData[index].time
+    },
+    scrollTo (showTime) {
+      if (!showTime) {
+        return
+      }
+      var qs = `.lyricRow[time='${showTime}']`
+      var e = this.$refs.lyric.querySelector(qs)
+      this.iscroll.scrollToElement(e, 1000, null, true)
+    },
+    focusIn (index) {
+      if (index < 0 || index >= this.lyricData.length ||
+        this.focusIndex === index) {
+        return
+      }
+      console.log(this.focusIndex, index)
+      if (this.focusIndex !== null) {
+        this.lyricData[this.focusIndex].focus = false
+      }
+      this.lyricData[index].focus = true
+      this.focusIndex = index
+      this.scrollTo(this.lyricData[index].time)
+    },
     loadLyric (uri) {
       return axios.get(uri)
         .then(response => {
           var lyricContent = response.data
+          this.focusIndex = null
           this.lyricData = LyricParser.parse(lyricContent)
         })
         .catch(error => {
-          console.log(error)
+          console.log('ERROR: load lyric failed', error)
           var lyricContent = '[00:00.00]Not available'
           this.lyricData = LyricParser.parse(lyricContent)
         })
@@ -139,11 +155,11 @@ export default {
       }
     },
     setNewRepeat (newRepeat) {
-      this.clearRepeat(this.repeat)
+      this.clearRepeat()
       this.repeat = newRepeat
       this.showRepeat()
     },
-    onPanRight (ev) {
+    onSwipeRight (ev) {
       console.log('swipe right to mark for repeating')
       var timeElement = getContainTimeAttrElement(ev.target)
       if (!timeElement) {
@@ -177,36 +193,23 @@ export default {
           newRepeat.start = theTime
         }
       }
-      console.log('onPanRight', newRepeat.start, newRepeat.end)
       this.setNewRepeat(newRepeat)
     },
-    clearRepeat (range) {
-      if (range.start === -1) {
-        return
-      }
-      if (range.end === -1) {
-        // Only one line for prepare to repeat
-        this.removeAttributeByTime(range.start, 'repeat')
-        return
-      }
+    clearAttrib  (attrib) {
       for (var i = 0; i < this.lyricData.length; i++) {
         var theTime = this.lyricData[i].time
-        if (theTime > range.end) {
-          break
-        } else if (theTime >= range.start) {
-          this.removeAttributeByTime(theTime, 'repeat')
-        }
+        this.removeAttributeByTime(theTime, attrib)
       }
     },
-    onPanLeft (ev) {
+    onSwipeLeft (ev) {
       console.log('swipe left to clean repeat')
-      this.clearRepeat(this.repeat)
+      this.clearAttrib('repeat')
       this.repeat.start = -1
       this.repeat.end = -1
     },
     playFromHere (ev) {
       // 寻找包含time属性的节点
-      var timeElement = this.getContainTimeAttrElement(ev.target)
+      var timeElement = getContainTimeAttrElement(ev.target)
       if (!timeElement) {
         return
       }

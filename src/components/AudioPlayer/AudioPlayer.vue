@@ -1,36 +1,18 @@
 
 <template>
   <div>
-    <Row type="flex" justify="center" align="middle">
-      <Col class='playBtn'>
-        <!-- <i-circle 
-          :percent="progress*100" 
-          :size='this.$calc(30)'
-          :trail-width="this.$calc(10)"
-          :stroke-width="this.$calc(10)"
-          @click.native="togglePlayback"
-          >
-            <Icon :size="this.$calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
-        </i-circle> -->
-        <Button type="ghost" shape="circle" @click.native="toggleLoop" :icon="this.$store.state.beLoop ? 'loop' : 'refresh'"></Button>
-        <Button type="ghost" shape="circle" @click.native="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
-      </Col>
-      <Col>{{songTitle}}</Col>
-    </Row>
-    <Row type="flex" justify="center" align="middle">
-      <Col :xs="23" :sm="23" :md="23" :lg="23">
-        <Lyric :lyricSrc='this.lyricFile' :seek='seek' v-on:playFromHere="playFromHere"></Lyric>
-      </Col>
-    </Row>
-    <BloomMenu style=".blooming-menu">
+    <div class="left-corner">telesoho</div>
+
+    <Lyric :lyricSrc='this.lyricFile' :seek='seek' v-on:playFromHere="playFromHere"></Lyric>
+    <BloomMenu>
       <i-circle slot='main'
           :percent="progress*100" 
-          :size='this.$calc(30)'
-          :trail-width="this.$calc(10)"
-          :stroke-width="this.$calc(10)"
+          :size='50'
+          :trail-width="10"
+          :stroke-width="10"
           v-touch:tap="togglePlayback"
           >
-            <Icon :size="this.$calc(10)" :type="playing ? 'pause' : 'play'" ></Icon>
+            <Icon :size="20" :type="playing ? 'pause' : 'play'" ></Icon>
       </i-circle>
       <BloomItem slot='BloomItems' name='loop'>
         <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" @click.native="toggleLoop" :icon="this.$store.state.beLoop ? 'loop' : 'refresh'"></Button>
@@ -43,12 +25,20 @@
 </template>
 
 <style lang='scss'>
-  .blooming-menu {
-    left: 90%;
-    top: 90%;
-    bottom: 0px;
-    position: absolute;
-  }
+.left-corner {
+  font-size: 10px;
+  line-height: 1.5em;
+  width: 7em;
+  background: orange;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-Index: 2;
+  transform-origin: right bottom;
+  transform: translate(-29.29%,-100%) rotate(-45deg);
+  text-indent: 0;
+  text-align: center;  
+}  
 </style>
 
 <script>

@@ -27,9 +27,6 @@
   background-color: lightblue;
   border-radius: 50%;
   position: absolute;
-  bottom: 5px;
-  left: 5px;
-  transition: -webkit-transform .28s cubic-bezier(.4, 0, .2, 1), box-shadow .28s cubic-bezier(.4, 0, .2, 1), opacity .28s cubic-bezier(.4, 0, .2, 1);
   transition: transform .28s cubic-bezier(.4, 0, .2, 1), box-shadow .28s cubic-bezier(.4, 0, .2, 1), opacity .28s cubic-bezier(.4, 0, .2, 1);
   border-radius: 50%;
   color: white;

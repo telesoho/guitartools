@@ -3,7 +3,7 @@ import axios from 'axios'
 import LyricParser from './LyricParser'
 import _ from 'underscore'
 import * as utils from '../../utils/utils'
-import animate from 'velocity-animate'
+import velocity from 'velocity-animate'
 
 function getContainTimeAttrElement (targetElement) {
   while (targetElement && !targetElement.getAttribute('time')) {
@@ -15,7 +15,11 @@ function getContainTimeAttrElement (targetElement) {
 export default {
   props: {
     lyricSrc: [String],
-    seek: Number
+    seek: Number,
+    height: {
+      type: Number,
+      default: screen.height
+    }
   },
   data () {
     return {
@@ -46,18 +50,15 @@ export default {
   computed: {
     lyricHtml () {
       return this.lyricData
+    },
+    lyricHeight () {
+      return this.height
     }
   },
   watch: {
-    // lyricData: {
-    //   handle: function (newValue, oldValue) {
-    //     console.log('lyricData changed', newValue, oldValue)
-    //   },
-    //   deep: true
-    // },
     seek (newValue, oldValue) {
       if (this.focusIndex === null) {
-        return this.focusIn(0)
+        this.focusIndex = 0
       }
 
       /* While time changed bigger than one second trigger scroll */
@@ -92,9 +93,8 @@ export default {
       if (!showTime) {
         return
       }
-      var qs = `.lyricRow[time='${showTime}']`
-      var e = this.$refs.lyric.querySelector(qs)
-      this.iscroll.scrollToElement(e, 1000, null, true)
+      var e = this.getElementByTime(showTime)
+      this.iscroll.scrollToElement(e, 1000, null, 50)
     },
     focusIn (index) {
       if (index < 0 || index >= this.lyricData.length ||
@@ -105,16 +105,16 @@ export default {
       if (this.focusIndex !== null) {
         this.lyricData[this.focusIndex].focus = false
         var e = this.getElementByTime(this.lyricData[this.focusIndex].time)
-        animate(e,
-          {scale: 1}, 200
+        velocity(e,
+          {scale: 0.8}, 200, 'swing'
         )
       }
       this.lyricData[index].focus = true
       this.focusIndex = index
       this.scrollTo(this.lyricData[index].time)
       e = this.getElementByTime(this.lyricData[this.focusIndex].time)
-      animate(e,
-        {scale: 1.05}, 500
+      velocity(e,
+        {scale: 1.0}, {duration: 500, easing: [ 300, 8 ]}
       )
     },
     loadLyric (uri) {

@@ -10,6 +10,10 @@ module.exports = {
       : config.dev.cssSourceMap,
     extract: isProduction
   }),
+  autoprefixer: {
+    browsers: ['last 7 versions'],
+    cascade: false  // 不美化输出 css
+  },
   transformToRequire: {
     video: 'src',
     source: 'src',

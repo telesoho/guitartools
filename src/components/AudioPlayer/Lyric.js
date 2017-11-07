@@ -94,7 +94,7 @@ export default {
         return
       }
       var e = this.getElementByTime(showTime)
-      this.iscroll.scrollToElement(e, 1000, null, 50)
+      this.iscroll.scrollToElement(e, 1000, null, -50, this.$IScroll.utils.ease.circular)
     },
     focusIn (index) {
       if (index < 0 || index >= this.lyricData.length ||

@@ -27,7 +27,7 @@
   }
 
   .scroller {
-    padding-bottom: 150px;
+    // padding-bottom: 350px;
   }  
 
   .lyricRow {

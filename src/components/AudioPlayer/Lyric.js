@@ -3,7 +3,7 @@ import axios from 'axios'
 import LyricParser from './LyricParser'
 import _ from 'underscore'
 import * as utils from '../../utils/utils'
-import velocity from 'velocity-animate'
+import anime from 'animejs'
 
 function getContainTimeAttrElement (targetElement) {
   while (targetElement && !targetElement.getAttribute('time')) {
@@ -52,7 +52,7 @@ export default {
       return this.lyricData
     },
     lyricHeight () {
-      return this.height
+      return isNaN(window.innerHeight) ? window.clientHeight : window.innerHeight
     }
   },
   watch: {
@@ -105,17 +105,32 @@ export default {
       if (this.focusIndex !== null) {
         this.lyricData[this.focusIndex].focus = false
         var e = this.getElementByTime(this.lyricData[this.focusIndex].time)
-        velocity(e,
-          {scale: 0.8}, 200, 'swing'
+        // velocity(e,
+        //   {scale: 0.8}, 200, 'swing'
+        // )
+        anime(
+          {
+            targets: e,
+            scale: 0.8,
+            duration: 200,
+            easing: 'easeInOutQuart'
+          }
         )
       }
       this.lyricData[index].focus = true
       this.focusIndex = index
       this.scrollTo(this.lyricData[index].time)
       e = this.getElementByTime(this.lyricData[this.focusIndex].time)
-      velocity(e,
-        {scale: 1.0}, {duration: 500, easing: [ 300, 8 ]}
-      )
+      // velocity(e,
+      //   {scale: 1.0}, {duration: 500, easing: [ 300, 8 ]}
+      // )
+      anime(
+        {
+          targets: e,
+          scale: 1,
+          duration: 300,
+          easing: 'easeInBack'
+        })
     },
     loadLyric (uri) {
       return axios.get(uri)

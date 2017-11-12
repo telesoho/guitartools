@@ -31,8 +31,8 @@ export default {
         focus: false
       }],
       repeat: {
-        start: -1,
-        end: -1
+        startIndex: -1,
+        endIndex: -1
       }
     }
   },
@@ -64,9 +64,10 @@ export default {
 
       /* While time changed bigger than one second trigger scroll */
       var focusTime = this.lyricData[this.focusIndex].time
-      if (this.repeat.end !== -1 && this.repeat.start !== -1) {
-        if (newValue < this.repeat.start || newValue >= this.getNextLyricTime(this.repeat.end)) {
-          this.$emit('playFromHere', this.repeat.start)
+      if (this.repeat.endIndex !== -1 && this.repeat.startIndex !== -1) {
+        if (this.focusIndex < this.repeat.startIndex || this.focusIndex > this.repeat.endIndex) {
+          this.focusIn(this.repeat.startIndex)
+          this.$emit('playFromHere', this.lyricData[this.repeat.startIndex].time)
           return
         }
       }
@@ -175,21 +176,16 @@ export default {
       utils.removeAttribute(e, attr)
     },
     showRepeat () {
-      if (this.repeat.start === -1) {
+      if (this.repeat.startIndex === -1) {
         return
       }
-      if (this.repeat.end === -1) {
+      if (this.repeat.endIndex === -1) {
         // draw one line of start
-        this.setAttributeByTime(this.repeat.start, 'repeat', false)
+        this.setAttributeByTime(this.lyricData[this.repeat.startIndex].time, 'repeat', false)
         return
       }
-      for (var i = 0; i < this.lyricData.length; i++) {
-        var theTime = this.lyricData[i].time
-        if (theTime > this.repeat.end) {
-          break
-        } else if (theTime >= this.repeat.start) {
-          this.setAttributeByTime(theTime, 'repeat', true)
-        }
+      for (var i = this.repeat.startIndex; i <= this.repeat.endIndex; i++) {
+        this.setAttributeByTime(this.lyricData[i].time, 'repeat', true)
       }
     },
     setNewRepeat (newRepeat) {
@@ -204,31 +200,32 @@ export default {
         return
       }
       var theTime = Number(timeElement.getAttribute('time'))
-      var indexOfStart = _.findIndex(this.lyricData, {time: theTime})
-      if (indexOfStart === -1) {
+      var indexOfSwipLyric = _.findIndex(this.lyricData, {time: theTime})
+      if (indexOfSwipLyric === -1) {
         console.log('ERROR: Cannot found index of element time')
         return
       }
       var newRepeat = this.repeat
-      if (newRepeat.start === -1) {
-        newRepeat.start = theTime
-      } else if (theTime === newRepeat.start || theTime === newRepeat.end) {
-        // Same of start and end repeat time will do nothing.
-        return
-      } else if (newRepeat.end === -1) {
-        newRepeat.end = theTime
-        if (newRepeat.end < newRepeat.start) {
-          newRepeat.end = newRepeat.start
-          newRepeat.start = theTime
+      if (newRepeat.startIndex === -1) {
+        /* repeat start index has not been set */
+        newRepeat.startIndex = indexOfSwipLyric
+      } else if (newRepeat.endIndex === -1) {
+        /* repeat end index has not been set */
+        newRepeat.endIndex = indexOfSwipLyric
+        if (newRepeat.endIndex < newRepeat.startIndex) {
+          /* endIndex <=> startIndex */
+          newRepeat.endIndex = newRepeat.startIndex
+          newRepeat.startIndex = indexOfSwipLyric
         }
       } else {
+        /* startIndex and endIndex has been set */
         // 保证连续区域为优先策略，减轻用户记忆
-        if (theTime < newRepeat.start) {
-          newRepeat.start = theTime
-        } else if (theTime > newRepeat.end) {
-          newRepeat.end = theTime
-        } else if (theTime < newRepeat.end) {
-          newRepeat.start = theTime
+        if (indexOfSwipLyric < newRepeat.startIndex) {
+          newRepeat.startIndex = indexOfSwipLyric
+        } else if (indexOfSwipLyric > newRepeat.endIndex) {
+          newRepeat.endIndex = indexOfSwipLyric
+        } else if (indexOfSwipLyric <= newRepeat.endIndex) {
+          newRepeat.startIndex = indexOfSwipLyric
         }
       }
       this.setNewRepeat(newRepeat)
@@ -242,8 +239,8 @@ export default {
     onSwipeLeft (ev) {
       console.log('swipe left to clean repeat')
       this.clearAttrib('repeat')
-      this.repeat.start = -1
-      this.repeat.end = -1
+      this.repeat.startIndex = -1
+      this.repeat.endIndex = -1
     },
     playFromHere (ev) {
       // 寻找包含time属性的节点

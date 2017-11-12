@@ -3,7 +3,7 @@ import axios from 'axios'
 import LyricParser from './LyricParser'
 import _ from 'underscore'
 import * as utils from '../../utils/utils'
-import anime from 'animejs'
+// import anime from 'animejs'
 
 function getContainTimeAttrElement (targetElement) {
   while (targetElement && !targetElement.getAttribute('time')) {
@@ -124,25 +124,10 @@ export default {
       console.log(this.focusIndex, index)
       if (this.focusIndex !== null) {
         this.lyricData[this.focusIndex].focus = false
-        var e = this.getElementByTime(this.lyricData[this.focusIndex].time)
-        anime(
-          {
-            targets: e,
-            scale: 0.8,
-            duration: 200
-          }
-        )
       }
       this.lyricData[index].focus = true
       this.focusIndex = index
       this.scrollTo(this.lyricData[index].time)
-      e = this.getElementByTime(this.lyricData[this.focusIndex].time)
-      anime(
-        {
-          targets: e,
-          scale: 1,
-          duration: 300
-        })
     },
     loadLyric (uri) {
       return axios.get(uri)

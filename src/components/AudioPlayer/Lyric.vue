@@ -41,6 +41,10 @@
     transform: scale(0.8);
   }
 
+  .lyricRow[focus=true] {
+    transform: scale(1);
+  }
+
   .lyricRow[repeat=true] {
     background-color: lightskyblue;
   }

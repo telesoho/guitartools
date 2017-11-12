@@ -4,7 +4,7 @@
     <div class="left-corner">telesoho</div>
 
     <Lyric :lyricSrc='this.lyricFile' :seek='seek' v-on:playFromHere="playFromHere"></Lyric>
-    <BloomMenu>
+    <BloomMenu ref='menu'>
       <i-circle slot='main'
           :percent="progress*100" 
           :size='50'
@@ -14,10 +14,13 @@
           >
             <Icon :size="20" :type="playing ? 'pause' : 'play'" ></Icon>
       </i-circle>
-      <BloomItem slot='BloomItems' name='loop'>
+      <BloomItem ref='loop' slot='BloomItems' name='loop'>
         <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" @click.native="toggleLoop" :icon="this.$store.state.beLoop ? 'loop' : 'refresh'"></Button>
       </BloomItem>
-      <BloomItem slot='BloomItems' name='muted'>
+      <BloomItem ref='muted' slot='BloomItems' name='muted'>
+        <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" @click.native="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
+      </BloomItem>
+      <BloomItem ref='help' slot='BloomItems' name='help'>
         <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" @click.native="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
       </BloomItem>
     </BloomMenu>

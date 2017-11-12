@@ -10,6 +10,25 @@ function broadcast (componentName, eventName, params) {
     }
   })
 }
+
+function sendTo (componentName, index, eventName, params) {
+  if (this.$children.lenght === 0) {
+    return false
+  }
+
+  this.$children.every((child, i) => {
+    const name = child.$options.name
+    console.log(this.$options.name, name, componentName)
+    if (name === componentName && index === i) {
+      child.$emit.apply(child, [eventName].concat(params))
+      return false
+    } else {
+        // todo 如果 params 是空数组，接收到的会是 undefined
+      return sendTo.apply(child, [componentName, index, eventName].concat([params]))
+    }
+  })
+}
+
 export default {
   methods: {
     dispatch (componentName, eventName, params) {
@@ -29,6 +48,10 @@ export default {
     },
     broadcast (componentName, eventName, params) {
       broadcast.call(this, componentName, eventName, params)
+    },
+    sendTo (componentName, index, eventName, params) {
+      console.log('sendTo', componentName, index, eventName, params)
+      sendTo.call(this, componentName, index, eventName, params)
     }
   }
 }

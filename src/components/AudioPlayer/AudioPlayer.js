@@ -3,6 +3,7 @@ import Lyric from './Lyric.vue'
 import BloomMenu from '../BloomMenu'
 
 export default {
+  name: 'AudioPlayer',
   props: {
     'lyricFile': ''
   },
@@ -26,8 +27,14 @@ export default {
       ]
     }
   },
+  beforeCreate () {
+    console.log('AudioPlayer.beforCreate', this)
+  },
   created () {
-    console.log('created')
+    console.log('AudioPlayer.created', this)
+  },
+  beforeMount () {
+    console.log('AudioPlayer.beforeMount', this)
   },
   computed: {
     songTitle () {
@@ -37,7 +44,7 @@ export default {
   updated () {
   },
   mounted () {
-    console.log('mounted')
+    console.log('mounted', this.$options.name)
   },
   methods: {
     playFromHere (time) {

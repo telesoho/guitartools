@@ -1,7 +1,6 @@
 import Emitter from '../../mixins/emitter'
 import * as utils from '../../utils/utils'
-
-const prefixCls = 'blooming-menu__'
+import anime from 'animejs'
 
 export default {
   name: 'MenuItem',
@@ -19,22 +18,25 @@ export default {
   data () {
     return {
       active: false,
-      state: 'close'
+      state: 'close',
+      anime: ''
     }
+  },
+  beforeCreate () {
+    console.log('BloomItem.beforCreate', this)
+  },
+  created () {
+    console.log('BloomItem.created', this)
+  },
+  beforeMount () {
+    console.log('BloomItem.beforeMount', this)
   },
   computed: {
-    classes () {
-      return [
-        `${prefixCls}-item`,
-        {
-          [`${prefixCls}-item-active`]: this.active,
-          [`${prefixCls}-item-selected`]: this.active,
-          [`${prefixCls}-item-disabled`]: this.disabled
-        }
-      ]
-    }
   },
   methods: {
+    setAnime (anime) {
+      this.anime = anime
+    },
     handleClick () {
       if (this.disabled) return
 
@@ -53,6 +55,7 @@ export default {
     }
   },
   mounted () {
+    console.log('mounted', this.$options.name)
     this.$on('on-update-active-name', name => {
       if (this.name === name) {
         this.active = true
@@ -64,10 +67,21 @@ export default {
       this.state = isOpen ? 'open' : 'close'
       var item = this.$el
       if (isOpen) {
+        console.log(this.anime)
+        anime(this.anime.expand)
         utils.setAttribute(item, 'state', 'expand')
       } else {
+        anime(this.anime.fold)
         utils.setAttribute(item, 'state', 'fold')
       }
+    })
+    this.$on('setAnime', animeParams => {
+      console.log('setAnime event')
+      for (var key in animeParams) {
+        console.log(animeParams)
+        animeParams[key].targets = this.$el
+      }
+      this.anime = animeParams
     })
   }
 }

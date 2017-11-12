@@ -1,13 +1,13 @@
 <template>
   <transition name="blooming" >
-    <li class="blooming-menu__item-btn-wrapper" state='fold' v-show="state!=='close'">
+    <li class="blooming-menu__item-btn-wrapper" state='fold'>
       <slot name='button'></slot>
     </li>
   </transition>
 </template>
 
 <style>
-.blooming-enter-active:nth-of-type(1) {
+/* .blooming-enter-active:nth-of-type(1) {
   animation: blooming-menu__expand-item-1 .5s;
 }
 
@@ -21,7 +21,7 @@
 
 .blooming-leave-active:nth-of-type(2) {
   animation: blooming-menu__fold-item-2 .5s;
-}
+} */
 
 .blooming-menu__item-btn-wrapper {
   background-color: lightblue;
@@ -32,7 +32,7 @@
   color: white;
 }
 
-.blooming-menu__item-btn-wrapper:nth-of-type(1)[state='expand'] {
+/* .blooming-menu__item-btn-wrapper:nth-of-type(1)[state='expand'] {
   animation-name: blooming-menu__expand-item-1;
   animation-fill-mode: forwards;
 }
@@ -40,7 +40,7 @@
 .blooming-menu__item-btn-wrapper:nth-of-type(2)[state='expand'] {
   animation-name: blooming-menu__expand-item-2;
   animation-fill-mode: forwards;
-}
+} */
 
 
 .blooming-menu__item-btn-wrapper:hover {
@@ -50,7 +50,7 @@
 .blooming-menu__item-btn-wrapper {
   cursor: pointer;
 }
-
+/* 
 @keyframes blooming-menu__expand-item-1 {
   0% {
     transform: translate(0px, 0px)
@@ -120,7 +120,7 @@
     opacity: 0;
   }
 }  
-
+ */
 
 </style>
 

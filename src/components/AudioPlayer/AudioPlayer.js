@@ -27,24 +27,10 @@ export default {
       ]
     }
   },
-  beforeCreate () {
-    console.log('AudioPlayer.beforeCreate', this)
-  },
-  created () {
-    console.log('AudioPlayer.created', this)
-  },
-  beforeMount () {
-    console.log('AudioPlayer.beforeMount', this)
-  },
   computed: {
     songTitle () {
       return this.sources[0]
     }
-  },
-  updated () {
-  },
-  mounted () {
-    console.log('mounted', this.$options.name)
   },
   methods: {
     playFromHere (time) {

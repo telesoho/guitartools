@@ -15,41 +15,16 @@ export default {
     },
     radius: {
       type: Number,
-      default: 80
+      default: 50
     },
     itemAnimationDelay: {
       type: Number,
-      default: 60
+      default: 40
     },
     animationDuration: {
       type: Number,
-      default: 300
-    },
-    itemWidth: {
-      type: Number,
-      default: 50
+      default: 100
     }
-  },
-  data () {
-    return {
-      state: {
-        isOpen: false,
-        isBeingAnimated: false
-      }
-    }
-  },
-  beforeCreate () {
-    console.log('BloomMenu.beforCreate', this)
-    // var item1 = this.$slots.BloomItems[0].componentInstance
-    // item1.$options.propsData.name = 'abc'
-  },
-  created () {
-    console.log('BloomMenu.created', this)
-    // console.log(this.$slots.BloomItems[0].componentInstance)
-    // var item1 = this.$slots.BloomItems[0].componentInstance
-  },
-  beforeMount () {
-    console.log('BloomMenu.beforeMount', this)
   },
   mounted () {
     console.log('mounted', this.$options.name)
@@ -57,6 +32,8 @@ export default {
       console.log('ERROR: you must define some item.')
       return
     }
+
+    this.isOpen = false
 
     var angleStep =
     (this.endAngle - this.startAngle) / (this.$slots.BloomItems.length - 1)
@@ -116,12 +93,12 @@ export default {
       if (this.isBeingAnimated) {
         return
       }
-      this.state.isOpen = !this.state.isOpen
+      this.isOpen = !this.isOpen
       this.isBeingAnimated = true
       setTimeout(() => {
         this.isBeingAnimated = false
       }, 1000)
-      this.broadcast('BloomItem', 'onOpenStateChanged', this.state.isOpen)
+      this.broadcast('BloomItem', 'onOpenStateChanged', this.isOpen)
     }
   }
 }

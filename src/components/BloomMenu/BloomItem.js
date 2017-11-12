@@ -20,22 +20,6 @@ export default {
       state: 'close'
     }
   },
-  beforeCreate () {
-    console.log('BloomItem.beforeCreate', this)
-  },
-  created () {
-    console.log('BloomItem.created', this)
-  },
-  beforeMount () {
-    console.log('BloomItem.beforeMount', this)
-  },
-  computed: {
-  },
-  methods: {
-    setAnime (anime) {
-      this.anime = anime
-    }
-  },
   mounted () {
     console.log('mounted', this.$options.name)
     this.$on('on-update-active-name', name => {

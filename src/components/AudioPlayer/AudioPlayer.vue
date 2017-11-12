@@ -41,7 +41,11 @@
   transform: translate(-29.29%,-100%) rotate(-45deg);
   text-indent: 0;
   text-align: center;  
-}  
+}
+
+.blooming-menu__item-btn {
+  color: white
+}
 </style>
 
 <script>

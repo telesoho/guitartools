@@ -19,7 +19,7 @@ export default {
     },
     itemAnimationDelay: {
       type: Number,
-      default: 40
+      default: 60
     },
     animationDuration: {
       type: Number,
@@ -113,13 +113,13 @@ export default {
   },
   methods: {
     onOpen () {
-      if (this.isDuration) {
+      if (this.isBeingAnimated) {
         return
       }
       this.state.isOpen = !this.state.isOpen
-      this.isDuration = true
+      this.isBeingAnimated = true
       setTimeout(() => {
-        this.isDuration = false
+        this.isBeingAnimated = false
       }, 1000)
       this.broadcast('BloomItem', 'onOpenStateChanged', this.state.isOpen)
     }

@@ -28,7 +28,7 @@ export default {
     }
   },
   beforeCreate () {
-    console.log('AudioPlayer.beforCreate', this)
+    console.log('AudioPlayer.beforeCreate', this)
   },
   created () {
     console.log('AudioPlayer.created', this)

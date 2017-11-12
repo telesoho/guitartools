@@ -16,6 +16,7 @@ export default {
   props: {
     lyricSrc: [String],
     seek: Number,
+    duration: Number,
     height: {
       type: Number,
       default: screen.height
@@ -23,7 +24,7 @@ export default {
   },
   data () {
     return {
-      focusIndex: null,
+      focusIndex: 0,
       lyricData: [{
         time: 0,
         lrcHtml: '',
@@ -63,6 +64,12 @@ export default {
 
       /* While time changed bigger than one second trigger scroll */
       var focusTime = this.lyricData[this.focusIndex].time
+      if (this.repeat.end !== -1 && this.repeat.start !== -1) {
+        if (newValue < this.repeat.start || newValue >= this.getNextLyricTime(this.repeat.end)) {
+          this.$emit('playFromHere', this.repeat.start)
+          return
+        }
+      }
       if (Math.abs(newValue - focusTime) > 1) {
         for (var i = this.lyricData.length - 1; i > 0; i--) {
           var lrc = this.lyricData[i]
@@ -80,6 +87,18 @@ export default {
     }
   },
   methods: {
+    getNextLyricTime (currentTime) {
+      for (var i = this.lyricData.length - 1; i > 0; i--) {
+        var lrc = this.lyricData[i]
+        if (currentTime >= lrc.time) {
+          var next = i + 1
+          if (next === this.lyricDat.length) {
+            return this.duration
+          }
+          return this.lyricData[i].time
+        }
+      }
+    },
     getElementByTime (time) {
       var qs = `.lyricRow[time='${time}']`
       var e = this.$refs.lyric.querySelector(qs)
@@ -105,9 +124,6 @@ export default {
       if (this.focusIndex !== null) {
         this.lyricData[this.focusIndex].focus = false
         var e = this.getElementByTime(this.lyricData[this.focusIndex].time)
-        // velocity(e,
-        //   {scale: 0.8}, 200, 'swing'
-        // )
         anime(
           {
             targets: e,
@@ -120,9 +136,6 @@ export default {
       this.focusIndex = index
       this.scrollTo(this.lyricData[index].time)
       e = this.getElementByTime(this.lyricData[this.focusIndex].time)
-      // velocity(e,
-      //   {scale: 1.0}, {duration: 500, easing: [ 300, 8 ]}
-      // )
       anime(
         {
           targets: e,

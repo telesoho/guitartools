@@ -3,7 +3,7 @@
   <div>
     <div class="left-corner">telesoho</div>
 
-    <Lyric :lyricSrc='this.lyricFile' :seek='seek' v-on:playFromHere="playFromHere"></Lyric>
+    <Lyric :lyricSrc='this.lyricFile' :seek='seek' :duration='duration' v-on:playFromHere="playFromHere"></Lyric>
     <BloomMenu ref='menu'>
       <i-circle slot='main'
           :percent="progress*100" 

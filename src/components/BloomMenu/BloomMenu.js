@@ -1,6 +1,3 @@
-// import * as BloomMenu from '../class/bloom-menu'
-// import velocity from 'velocity-animate'
-
 function toRadians (angle) {
   return angle * (Math.PI / 180)
 }
@@ -75,39 +72,37 @@ export default {
       var x0 = 0
       var y0 = 0
       var expandTranslateX = [
-        {value: x0},
-        {value: x2},
-        {value: x3, easing: 'easeOutBack'}
+        {value: x0, duration: 0},
+        {value: x2, duration: 0.7 * this.animationDuration},
+        {value: x3, duration: 0.3 * this.animationDuration, easing: 'easeOutBack'}
       ]
       var expandTranslateY = [
-        {value: y0},
-        {value: y2},
-        {value: y3, easing: 'easeOutBack'}
+        {value: y0, duration: 0},
+        {value: y2, duration: 0.7 * this.animationDuration},
+        {value: y3, duration: 0.3 * this.animationDuration, easing: 'easeOutBack'}
       ]
 
       var foldTranslateX = [
-        {value: x3},
-        {value: x2},
-        {value: x0, easing: 'easeOutBack'}
+        {value: x3, duration: 0},
+        {value: x2, duration: 0.7 * this.animationDuration},
+        {value: x0, duration: 0.3 * this.animationDuration, easing: 'easeOutBack'}
       ]
       var foldTranslateY = [
-        {value: y3},
-        {value: y2},
-        {value: y0, easing: 'easeOutBack'}
+        {value: y3, duration: 0},
+        {value: y2, duration: 0.7 * this.animationDuration},
+        {value: y0, duration: 0.3 * this.animationDuration, easing: 'easeOutBack'}
       ]
 
       this.$emit.apply(this.$slots.BloomItems[i].componentInstance, ['setAnime'].concat({
         expand: {
           translateX: expandTranslateX,
           translateY: expandTranslateY,
-          delay: i * this.itemAnimationDelay,
-          duration: this.animationDuration
+          delay: i * this.itemAnimationDelay
         },
         fold: {
           translateX: foldTranslateX,
           translateY: foldTranslateY,
-          delay: i * this.itemAnimationDelay,
-          duration: this.animationDuration
+          delay: i * this.itemAnimationDelay
         }
       }))
       angleCur += angleStep
@@ -118,7 +113,14 @@ export default {
   },
   methods: {
     onOpen () {
+      if (this.isDuration) {
+        return
+      }
       this.state.isOpen = !this.state.isOpen
+      this.isDuration = true
+      setTimeout(() => {
+        this.isDuration = false
+      }, 1000)
       this.broadcast('BloomItem', 'onOpenStateChanged', this.state.isOpen)
     }
   }

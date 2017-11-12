@@ -23,6 +23,11 @@
 
 .blooming-menu__items {
   position: absolute;
+  display: flex;
+  width: 50px;
+  height: 50px;  
+  justify-content: center;
+  align-items: center;  
 }
 
 .blooming-menu__container {

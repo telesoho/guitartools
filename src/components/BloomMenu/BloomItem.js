@@ -1,5 +1,4 @@
 import Emitter from '../../mixins/emitter'
-import * as utils from '../../utils/utils'
 import anime from 'animejs'
 
 export default {
@@ -18,12 +17,11 @@ export default {
   data () {
     return {
       active: false,
-      state: 'close',
-      anime: ''
+      state: 'close'
     }
   },
   beforeCreate () {
-    console.log('BloomItem.beforCreate', this)
+    console.log('BloomItem.beforeCreate', this)
   },
   created () {
     console.log('BloomItem.created', this)
@@ -36,22 +34,6 @@ export default {
   methods: {
     setAnime (anime) {
       this.anime = anime
-    },
-    handleClick () {
-      if (this.disabled) return
-
-      let parent = this.$parent
-      let name = parent.$options.name
-      while (parent && (!name || name !== 'Submenu')) {
-        parent = parent.$parent
-        if (parent) name = parent.$options.name
-      }
-
-      if (parent) {
-        this.dispatch('Submenu', 'on-menu-item-select', this.name)
-      } else {
-        this.dispatch('Menu', 'on-menu-item-select', this.name)
-      }
     }
   },
   mounted () {
@@ -65,23 +47,18 @@ export default {
     })
     this.$on('onOpenStateChanged', isOpen => {
       this.state = isOpen ? 'open' : 'close'
-      var item = this.$el
       if (isOpen) {
-        console.log(this.anime)
-        anime(this.anime.expand)
-        utils.setAttribute(item, 'state', 'expand')
+        anime(this.animeParams.expand)
       } else {
-        anime(this.anime.fold)
-        utils.setAttribute(item, 'state', 'fold')
+        anime(this.animeParams.fold)
       }
     })
     this.$on('setAnime', animeParams => {
-      console.log('setAnime event')
+      console.log('setAnime event', animeParams)
       for (var key in animeParams) {
-        console.log(animeParams)
         animeParams[key].targets = this.$el
       }
-      this.anime = animeParams
+      this.animeParams = animeParams
     })
   }
 }

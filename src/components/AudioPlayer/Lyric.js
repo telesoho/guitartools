@@ -112,8 +112,7 @@ export default {
           {
             targets: e,
             scale: 0.8,
-            duration: 200,
-            easing: 'easeInOutQuart'
+            duration: 200
           }
         )
       }
@@ -128,8 +127,7 @@ export default {
         {
           targets: e,
           scale: 1,
-          duration: 300,
-          easing: 'easeInBack'
+          duration: 300
         })
     },
     loadLyric (uri) {

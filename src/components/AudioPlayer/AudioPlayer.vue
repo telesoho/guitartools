@@ -21,7 +21,7 @@
         <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" @click.native="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
       </BloomItem>
       <BloomItem ref='help' slot='BloomItems' name='help'>
-        <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" @click.native="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
+        <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" icon="help"></Button>
       </BloomItem>
     </BloomMenu>
   </div>

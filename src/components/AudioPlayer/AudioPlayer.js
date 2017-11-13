@@ -33,10 +33,9 @@ export default {
       ]
     }
   },
-  computed: {
-    songTitle () {
-      return this.sources[0]
-    }
+  mounted () {
+    var leafname = this.sources[0].split('\\').pop().split('/').pop()
+    document.title = leafname
   },
   methods: {
     playFromHere (time) {

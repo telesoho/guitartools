@@ -10,7 +10,7 @@
         v-html="lrc.lrcHtml"
         :focus="lrc.focus"
         ></p>
-        <p class="lyricRow">-- 让子弹飞一会儿 --</p>
+        <p class="lyricRow">-- 让子弹先飞一会儿 --</p>
     </ul>
   </div>
 </template>
@@ -70,10 +70,4 @@
 
 </style>
 
-<script>
-import Lyric from './Lyric'
-
-export default {
-  mixins: [Lyric]
-}
-</script>
+<script src='./lyric.js'></script>

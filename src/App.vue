@@ -22,3 +22,10 @@ export default {
   }
 }
 </script>
+
+<style>
+body {
+user-select: none;
+}
+
+</style>

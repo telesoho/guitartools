@@ -1,5 +1,6 @@
 import IScroll from 'iscroll'
 import touch from '../directives/touch'
+import * as IntroJs from 'intro.js'
 
 var devicePixelRatio = window.devicePixelRatio ||
 (window.matchMedia &&
@@ -49,5 +50,10 @@ export default {
     }
 
     Vue.prototype.$IScroll = IScroll
+
+    Vue.prototype.$intro = (...args) => {
+      console.log(IntroJs)
+      return IntroJs.introJs(...args)
+    }
   }
 }

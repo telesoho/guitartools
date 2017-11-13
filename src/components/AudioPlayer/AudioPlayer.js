@@ -1,6 +1,8 @@
 import VueHowler from './VueHowler.js'
 import Lyric from './Lyric.vue'
 import BloomMenu from '../BloomMenu'
+import 'intro.js/introjs.css'
+import 'intro.js/themes/introjs-modern.css'
 
 export default {
   name: 'AudioPlayer',
@@ -12,6 +14,7 @@ export default {
   data () {
     return {
       lyric: '',
+      isHelp: false,
       bloomMenuIsOpen: false,
       bloomItem: [
         {
@@ -36,6 +39,22 @@ export default {
     playFromHere (time) {
       console.log(time)
       this.setSeek(time)
+    },
+    onHelp () {
+      console.log(this.$intro)
+      this.$intro().setOptions(
+        {
+          showStepNumbers: false,
+          showProgress: false,
+          showBullets: false,
+          hidePrev: true,
+          hideNext: true,
+          nextLabel: '>',
+          prevLabel: '<',
+          doneLabel: '完成',
+          skipLabel: '取消'
+        }
+      ).start()
     }
   }
 }

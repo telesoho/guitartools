@@ -1,6 +1,17 @@
 import IScroll from 'iscroll'
 import touch from '../directives/touch'
-import * as IntroJs from 'intro.js'
+import IntroJs from 'intro.js'
+// import Circle from 'iview/src/components/Circle'
+// import Icon from 'iview/src/components/Icon'
+// import Button from 'iview/src/components/Button'
+import 'iview/dist/styles/iview.css'    // 使用 CSS
+
+// const iviewComponents = {
+//   iButton: Button,
+//   Button,
+//   iCircle: Circle,
+//   Icon
+// }
 
 var devicePixelRatio = window.devicePixelRatio ||
 (window.matchMedia &&
@@ -10,6 +21,10 @@ var devicePixelRatio = window.devicePixelRatio ||
 export default {
   install (Vue, options) {
     console.log('install components', screen.height)
+
+    // Object.keys(iviewComponents).forEach(key => {
+    //   Vue.component(key, iviewComponents[key])
+    // })
 
     // 1. 添加全局方法或属性
     Vue.calc = function (px) {

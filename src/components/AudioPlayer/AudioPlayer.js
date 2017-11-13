@@ -10,7 +10,10 @@ export default {
     'lyricFile': ''
   },
   mixins: [VueHowler],
-  components: {Lyric, BloomMenu: BloomMenu, BloomItem: BloomMenu.Item},
+  components: {Lyric,
+    BloomMenu: BloomMenu,
+    BloomItem: BloomMenu.Item
+  },
   data () {
     return {
       lyric: '',

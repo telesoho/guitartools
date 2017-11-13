@@ -19,10 +19,10 @@
             <Icon :size="20" :type="playing ? 'pause' : 'play'"></Icon>
       </i-circle>
       <BloomItem ref='loop' slot='BloomItems' name='loop' data-intro='点击：循环播放/单曲播放' data-tooltipClass='intro-tooltip-loop'>
-        <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" @click.native="toggleLoop" :icon="this.$store.state.beLoop ? 'loop' : 'refresh'"></Button>
+        <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" v-touch:tap="toggleLoop" :icon="this.$store.state.beLoop ? 'loop' : 'refresh'"></Button>
       </BloomItem>
       <BloomItem ref='muted' slot='BloomItems' name='muted' data-intro='点击：静音/非静音' data-tooltipClass='intro-tooltip-muted'>
-        <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" @click.native="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
+        <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" v-touch:tap="toggleMute" :icon="this.$store.state.muted ? 'android-volume-off' : 'android-volume-up'"></Button>
       </BloomItem>
       <BloomItem ref='help' slot='BloomItems' name='help' data-intro='点击：显示帮助' data-tooltipClass='intro-tooltip-help'>
         <Button slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" v-touch:tap="onHelp" icon="help"></Button>
@@ -48,11 +48,11 @@
 }
 
 .blooming-menu__item-btn {
-  color: white
+  color: white !important;
 }
 
 .intro-highlight {
-  display: none
+  display: none;
 }
 
 .intro-tooltip-play {

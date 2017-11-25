@@ -11,7 +11,7 @@ export default {
   data () {
     return {
       audioSources: ['./static/千住明-涙そうそう.mp3'],
-      lyricFile: './static/千住明-涙そうそう.lrc'
+      lyricFile: './static/千住明-涙そうそう.1.lrc'
     }
   },
   components: {

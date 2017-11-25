@@ -1,4 +1,4 @@
-import jtab from './jtab'
+import renderChord from '../../class/chart'
 import axios from 'axios'
 import LyricParser from './LyricParser'
 import _ from 'underscore'
@@ -83,7 +83,7 @@ export default {
   },
   updated () {
     if (this.lyricData.length > 0 && this.focusIndex === null) {
-      jtab.renderChord(this.$refs.lyric)
+      renderChord(this.$refs.lyric)
       this.iscroll.refresh()
     }
   },

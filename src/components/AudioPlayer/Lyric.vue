@@ -70,4 +70,4 @@
 
 </style>
 
-<script src='./lyric.js'></script>
+<script src='./Lyric.js'></script>

@@ -89,7 +89,7 @@ export default {
       _polls: {
         seek: {
           id: null,
-          interval: 1000 / 4, // 4 times per second (4Hz)
+          interval: 1000 / 1000, // 4 times per second (4Hz)
           hook: () => {
             this.seek = this.$data._howl.seek()
           }

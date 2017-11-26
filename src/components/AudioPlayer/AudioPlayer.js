@@ -1,4 +1,5 @@
 import VueHowler from './VueHowler.js'
+import ChordStrip from './ChordStrip.vue'
 import Lyric from './Lyric.vue'
 import BloomMenu from '../BloomMenu'
 import 'intro.js/introjs.css'
@@ -7,10 +8,12 @@ import 'intro.js/themes/introjs-modern.css'
 export default {
   name: 'AudioPlayer',
   props: {
-    'lyricFile': ''
+    'lyricFile': '',
+    'chordFile': ''
   },
   mixins: [VueHowler],
   components: {Lyric,
+    ChordStrip,
     BloomMenu: BloomMenu,
     BloomItem: BloomMenu.Item
   },

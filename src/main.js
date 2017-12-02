@@ -21,7 +21,8 @@ document.addEventListener('touchmove', function (event) {
 const store = new Vuex.Store({
   state: {
     muted: false,
-    beLoop: false
+    beLoop: false,
+    instruments: 'guitar'
   },
   mutations: {
     setMuted (state, muted) {

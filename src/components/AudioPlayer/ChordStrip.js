@@ -1,59 +1,12 @@
-import renderChord from '../../class/chart'
 import axios from 'axios'
 import _ from 'underscore'
 import * as utils from '../../utils/utils'
-
-function ParseChordData(content) {
-
-  function CapoKey(key, capo) {
-    var ChordKey = ['C', 'C#/Bb', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B']
-    var lens = ChordKey.length
-    for (var i = 0; i < lens; i++) {
-      if (key === ChordKey[i]) {
-        break
-      } else if (key.length === 2 && ChordKey[i].search(key) !== -1) {
-        break
-      }
-    }
-    i = i - capo
-    if (i < 0) {
-      i = lens + i
-    }
-    var retKey = ChordKey[i]
-    return retKey.length === 1 ? retKey : retKey.substr(0, 2)
-  }
-
-  function GetChordName(chord) {
-    if (chord === 'N') {
-      return 'Intro'
-    }
-
-    var chordArray = chord.split(":")
-    var chordKey = CapoKey(chordArray[0], 3)
-    var chordShap = chordArray[1]
-    chordShap = chordShap.replace("maj", "").replace("min", "m")
-    return chordKey + chordShap
-  }
-  var jsonObj = null
-  if (typeof content === 'string') {
-    jsonObj = JSON.parse(content)
-  } else {
-    jsonObj = content
-  }
-  for (var key in jsonObj) {
-    var item = jsonObj[key]
-    item.name = GetChordName(item.chord)
-    item.width = item.end - item.start
-  }
-  return jsonObj
-}
 
 export default {
   name: 'ChordStrip',
   props: {
     chordSrc: [String],
     seek: Number,
-    duration: Number,
     width: {
       type: Number,
       default: screen.width
@@ -63,6 +16,7 @@ export default {
     return {
       focusIndex: 0,
       transformX: 0,
+      duration: 0,
       chordData: [{
         start: 0,
         end: 0,
@@ -110,6 +64,55 @@ export default {
     // }
   },
   methods: {
+
+    ParseChordData(content) {
+        // 根据变调夹位置，推算出对应和弦
+        function CapoKey(key, capo) {
+          var ChordKey = ['C', 'C#/Bb', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B']
+          var lens = ChordKey.length
+          for (var i = 0; i < lens; i++) {
+            if (key === ChordKey[i]) {
+              break
+            } else if (key.length === 2 && ChordKey[i].search(key) !== -1) {
+              break
+            }
+          }
+          i = i - capo
+          if (i < 0) {
+            i = lens + i
+          }
+          var retKey = ChordKey[i]
+          return retKey.length === 1 ? retKey : retKey.substr(0, 2)
+        }
+      
+        function GetChordName(chord) {
+          if (chord === 'N') {
+            return 'Intro'
+          }
+      
+          var chordArray = chord.split(":")
+          var chordKey = CapoKey(chordArray[0], 3)
+          var chordShap = chordArray[1]
+          chordShap = chordShap.replace("maj", "").replace("min", "m")
+          return chordKey + chordShap
+        }
+      
+        var jsonObj = null
+        if (typeof content === 'string') {
+          jsonObj = JSON.parse(content)
+        } else {
+          jsonObj = content
+        }
+        this.duration = 0
+        for (var key in jsonObj) {
+          var item = jsonObj[key]
+          item.name = GetChordName(item.chord)
+          item.width = item.end - item.start
+          this.duration += item.width
+        }
+        return jsonObj
+      },
+
     focusIn(index) {
       if (index < 0 || index >= this.lyricData.length ||
         this.focusIndex === index) {
@@ -127,7 +130,7 @@ export default {
       return axios.get(uri)
         .then(response => {
           this.focusIndex = null
-          this.chordData = ParseChordData(response.data)
+          this.chordData = this.ParseChordData(response.data)
         })
         .catch(error => {
           console.log('ERROR: load chord failed', error)

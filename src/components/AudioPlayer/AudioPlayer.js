@@ -21,18 +21,19 @@ export default {
     return {
       lyric: '',
       isHelp: false,
+      instruments: 'guitar',
       bloomMenuIsOpen: false,
       bloomItem: [
-        {
-          name: 'muted',
-          icon: this.$store.state.muted ? 'android-volume-off' : 'android-volume-up',
-          onTap: this.toggleMute
-        },
-        {
-          name: 'loop',
-          icon: this.$store.state.beLoop ? 'loop' : 'refresh',
-          onTap: this.toggleLoop
-        }
+        // {
+        //   name: 'muted',
+        //   icon: this.$store.state.muted ? 'android-volume-off' : 'android-volume-up',
+        //   onTap: this.toggleMute
+        // },
+        // {
+        //   name: 'loop',
+        //   icon: this.$store.state.beLoop ? 'loop' : 'refresh',
+        //   onTap: this.toggleLoop
+        // }
       ]
     }
   },
@@ -42,8 +43,15 @@ export default {
   },
   methods: {
     playFromHere (time) {
-      console.log(time)
       this.setSeek(time)
+    },
+    onChangeInstruments () {
+      if (this.$store.state.instuments === 'guitar' ) {
+        this.$store.state.instuments = 'ukulele'
+      } else {
+        this.$store.state.instuments = 'guitar'
+      }
+      this.instruments = this.$store.state.instuments
     },
     onHelp () {
       console.log(this.$intro)

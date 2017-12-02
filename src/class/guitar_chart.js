@@ -5,11 +5,11 @@
  * Requires: chord.js
  * Requires: Raphael JS (raphaeljs.com)
  */
-import ChordBox from './chord'
+import GuitarChordBox from './guitar_chord_box'
 import * as _ from 'underscore'
 var Raphael = require('raphael')
 
-var ChordChart = [
+var GuitarChordChart = [
   { section: 'Open Chords',
     description: `These chords are played in open position, and generally
                  include open strings.`,
@@ -114,7 +114,7 @@ var ChordChart = [
   }
 ]
 
-var ChordShapes = {
+var GuitarChordShapes = {
   'E:maj': {
     name: '',
     chord: [[3, 2], [4, 3], [5, 3]],
@@ -301,10 +301,10 @@ function createChordStructByName (chordName) {
     return null
   }
 
-  for (var i in ChordChart) {
-    for (var k in ChordChart[i].chords) {
+  for (var i in GuitarChordChart) {
+    for (var k in GuitarChordChart[i].chords) {
       if (k === chordName) {
-        return ChordChart[i].chords[k]
+        return GuitarChordChart[i].chords[k]
       }
     }
   }
@@ -318,10 +318,10 @@ function createChordStructByName (chordName) {
 }
 
 function createChordStruct (key, string, shape) {
-  console.log(key, string, shape)
+  // console.log(key, string, shape)
   string = string.toUpperCase()
   var position = positions[string][key]
-  var struct = ChordShapes[shape]
+  var struct = GuitarChordShapes[shape]
 
   return {
     name: key + struct.name,
@@ -338,7 +338,7 @@ function renderOneChord (element, chordName) {
 
 function renderOneChordElement (element, chordStruct) {
   var paper = Raphael(element, 60, 60)
-  var chord = new ChordBox(paper, 10, 0, 50, 60)
+  var chord = new GuitarChordBox(paper, 10, 0, 50, 60)
 
   chord.setChord(
     chordStruct.name,
@@ -353,7 +353,7 @@ function renderOneChordElement (element, chordStruct) {
   element.className += ' rendered'
 }
 
-function renderChord (withinElement) {
+function renderGuitarChord (withinElement) {
   withinElement = withinElement || document
   _.each(withinElement.getElementsByClassName('chord'), function (el) {
     if (el.className.indexOf('rendered') > -1) {
@@ -363,4 +363,4 @@ function renderChord (withinElement) {
   })
 }
 
-export default renderChord
+export default renderGuitarChord

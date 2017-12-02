@@ -1,4 +1,5 @@
-import renderChord from '../../class/chart'
+import renderUkuleleChord from '../../class/ukulele_chart'
+import renderGuitarChord from '../../class/guitar_chart'
 import axios from 'axios'
 import LyricParser from './LyricParser'
 import _ from 'underscore'
@@ -83,7 +84,8 @@ export default {
   },
   updated () {
     if (this.lyricData.length > 0 && this.focusIndex === null) {
-      renderChord(this.$refs.lyric)
+      //renderUkuleleChord(this.$refs.lyric)
+      renderGuitarChord(this.$refs.lyric)
       this.iscroll.refresh()
     }
   },

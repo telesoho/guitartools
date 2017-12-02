@@ -11,7 +11,7 @@ Raphael.prototype.vexLine = function (x, y, newX, newY) {
   return this.path('M' + x + ' ' + y + 'L' + newX + ' ' + newY)
 }
 
-class ChordBox {
+class GuitarChordBox {
   constructor (paper, x, y, width, height) {
     this.paper = paper
     this.x = x
@@ -187,4 +187,4 @@ class ChordBox {
   }
 }
 
-export default ChordBox
+export default GuitarChordBox

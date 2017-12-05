@@ -33,7 +33,8 @@ export default {
       focusIndex: 0,
       lyricData: [{
         time: 0,
-        lrcHtml: '',
+        chords: [],
+        lrcText: '',
         focus: false
       }],
       repeat: {

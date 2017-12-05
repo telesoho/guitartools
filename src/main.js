@@ -20,16 +20,26 @@ document.addEventListener('touchmove', function (event) {
 
 const store = new Vuex.Store({
   state: {
+    seek: 0,
     muted: false,
     beLoop: false,
     instruments: 'guitar'
   },
   mutations: {
+    setSeek (state, seek) {
+      this.state.seek = seek
+    },
     setMuted (state, muted) {
       this.state.muted = muted
     },
     setLoop (state, loop) {
       this.state.beLoop = loop
+    }
+  },
+  getters: {
+    // ...
+    getSeek: (state) => {
+      return state.seek
     }
   }
 })

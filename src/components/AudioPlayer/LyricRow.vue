@@ -1,34 +1,34 @@
 <template>
-    <p :time='this.lyricData.time' 
-       :focus='this.lyricData.focus'
-    >
+    <p :time='this.lyricData.time' :focus='this.lyricData.focus'>
         <span class="chordWrap" >
-            <div class="chord" v-for="chord in lyricData.chords" :key="chord.start" :chord="chord.chord"></div>
+            <Chord v-for="chord in lyricData.chords" :key="chord.start" :chord='chord'></Chord>
         </span>
         <span class="lyric" v-html='this.lyricData.lrcText'></span>
     </p>
 </template>
 
-<<script>
+<script>
+import Chord from './Chord.vue'
+
 export default {
   props: {
     lyricData: {}
+  },
+  components: {
+    'Chord': Chord
   }
 }
 </script>
 
-<<style lang='scss'>
+<style lang='scss'>
 
   .chordWrap {
-      display: table;
+      display: flex;
       position:relative;
       top:-20px;
       color: black;
+      flex-wrap:wrap;
       // line-height:40px;
-  }
-
-  .chord {
-      display: table-cell;
   }
 
   .lyric {

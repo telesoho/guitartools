@@ -4,6 +4,7 @@ import axios from 'axios'
 import LyricParser from './LyricParser'
 import _ from 'underscore'
 import * as utils from '../../utils/utils'
+import LyricRow from './LyricRow.vue'
 // import anime from 'animejs'
 
 function getContainTimeAttrElement (targetElement) {
@@ -23,6 +24,9 @@ export default {
       type: Number,
       default: screen.height
     }
+  },
+  components: {
+    LyricRow
   },
   data () {
     return {

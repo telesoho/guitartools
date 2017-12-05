@@ -15,6 +15,7 @@ var UkuleleChordChart = [
                  include open strings.`,
     chords:
     [
+      {'name': 'N', 'seq': '0,0,0,0'},
       {'name': 'A', 'seq': '2,1,0,0'},
       {'name': 'A5', 'seq': '2,4,0,0'},
       {'name': 'A7', 'seq': '0,1,0,0'},

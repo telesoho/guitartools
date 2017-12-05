@@ -14,6 +14,12 @@ var GuitarChordChart = [
     description: `These chords are played in open position, and generally
                  include open strings.`,
     chords: {
+      'N': {
+        name: '',
+        chord: [],
+        position: 0,
+        bars: []
+      },
       'C:maj': {
         name: 'C',
         chord: [[1, 0], [2, 1], [3, 0], [4, 2], [5, 3]],
@@ -295,10 +301,6 @@ function createChordStructByName (chordName) {
       }
     }
     return tabKey
-  }
-
-  if (chordName === 'N') {
-    return null
   }
 
   for (var i in GuitarChordChart) {

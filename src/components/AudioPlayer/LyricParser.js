@@ -4,54 +4,6 @@
  * @class LyricParser
  */
 class LyricParser {
-  constructor () {
-    this.renderLine = function (lrcLine) {
-      var html = []
-      const regex = /\$([a-zA-Z0-9#:]+)/g
-      let lyricStartPos = 0
-      let m
-      while ((m = regex.exec(lrcLine)) !== null) {
-        // This is necessary to avoid infinite loops with zero-width matches
-        if (m.index === regex.lastIndex) {
-          regex.lastIndex++
-        }
-
-        var lyric = lrcLine.substring(lyricStartPos, m.index)
-        if (lyric.trim().length > 0) {
-          html.push(`<span class="lyric">${lyric}</span>`)
-        } else {
-          if (lyricStartPos !== 0) {
-            html.push(`<span class="lyric">&nbsp;</span>`)
-          }
-        }
-
-        var chord = m[1]
-
-        html.push(`
-        <span class="chordWrap">
-          <ruby>
-            <div class="chord" chord="${chord}"></div>
-            <span style="display: none;">${chord}</span>
-          </ruby>
-        </span>
-        `)
-
-        lyricStartPos = regex.lastIndex
-      }
-
-      if (lyricStartPos < lrcLine.length) {
-        lyric = lrcLine.substring(lyricStartPos, lrcLine.length)
-        if (lyric.trim().length > 0) {
-          html.push(`<span class="lyric">${lyric}</span>`)
-        } else {
-          if (lyricStartPos !== 0) {
-            html.push(`<span class="lyric">&nbsp;</span>`)
-          }
-        }
-      }
-      return html.join('')
-    }
-  }
   /**
    * Parse lrc, suppose multiple time tag
    *
@@ -68,7 +20,8 @@ class LyricParser {
    * @memberof LyricParser
    */
   parse (lrcString, chordString, renderLineCallback) {
-    var renderLine = renderLineCallback || this.renderLine
+    var chordData = this.parseChordData(chordString, 3)
+    console.log(chordData)
     var lyricData = []
     const lyric = lrcString.split('\n')
     const lyricLen = lyric.length
@@ -87,7 +40,28 @@ class LyricParser {
             parseInt(oneTime[3]) / ((oneTime[3] + '').length === 2 ? 100 : 1000)
           lyricData.push({
             time: lrcTime,
-            lrcHtml: renderLine(lrcText),
+            chords: [{
+              'end': 50,
+              'chord': 'N',
+              'start': 0
+            }, {
+              'end': 230,
+              'chord': 'F:maj',
+              'start': 50
+            }, {
+              'end': 380,
+              'chord': 'C:maj',
+              'start': 230
+            }, {
+              'end': 380,
+              'chord': 'F:maj',
+              'start': 230
+            }, {
+              'end': 380,
+              'chord': 'G:maj',
+              'start': 230
+            }],
+            lrcText: lrcText,
             focus: false
           })
         }
@@ -151,7 +125,7 @@ class LyricParser {
    * @returns
    * @memberof LyricParser
    */
-  parseChordData (content) {
+  parseChordData (content, capo = 0) {
     var jsonObj = null
     if (typeof content === 'string') {
       jsonObj = JSON.parse(content)
@@ -161,7 +135,7 @@ class LyricParser {
     this.duration = 0
     for (var key in jsonObj) {
       var item = jsonObj[key]
-      item.name = this.getShortNameOfChord(item.chord)
+      item.name = this.getShortNameOfChord(item.chord, capo)
       item.width = item.end - item.start
       this.duration += item.width
     }

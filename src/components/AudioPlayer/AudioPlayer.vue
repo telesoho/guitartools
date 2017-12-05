@@ -2,8 +2,12 @@
 <template>
   <div>
     <div class="left-corner">telesoho</div>
-    <ChordStrip :chordSrc='this.chordFile' :seek='seek'></ChordStrip>
-    <Lyric data-intro='长按歌词：跳转到该歌词处<br>右划歌词一次：选择重复播放范围的起始歌词<br>右划歌词二次：选择重复播放范围的结束歌词<br>左划歌词：取消播放范围' :lyricSrc='this.lyricFile' :seek='seek' :duration='duration' v-on:playFromHere="playFromHere"></Lyric>
+    <Lyric data-intro='长按歌词：跳转到该歌词处<br>右划歌词一次：选择重复播放范围的起始歌词<br>右划歌词二次：选择重复播放范围的结束歌词<br>左划歌词：取消播放范围' 
+      :chordSrc='this.chordSrc' 
+      :lyricSrc='this.lyricSrc' 
+      :seek='seek' 
+      :duration='duration' 
+      v-on:playFromHere="playFromHere"></Lyric>
     <BloomMenu ref='menu'>
       <i-circle slot='main'
           :percent="progress*100" 

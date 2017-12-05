@@ -2,7 +2,9 @@
 <div class="chord-strip" ref='ChordStrip'>
   <div class="chord-strip--center-line"></div>
   <div class="chord-strip--chords" :style="chordStripStyle">
-    <div class="strip-chord" :current='chord.start < position && position < chord.end' v-for="chord in chordHtml" :key="chord.start" :style="{width: chord.width + 'px'}">
+    <div class="strip-chord" :current='chord.start < position && position < chord.end' v-for="chord in chordHtml" 
+        :key="chord.start" 
+        :style="{width: chord.width + 'px'}">
         <span class="chord-name">{{chord.name}}</span>
     </div>
   </div>

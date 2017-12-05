@@ -8,8 +8,8 @@ import 'intro.js/themes/introjs-modern.css'
 export default {
   name: 'AudioPlayer',
   props: {
-    'lyricFile': '',
-    'chordFile': ''
+    lyricSrc: [String],
+    chordSrc: [String]
   },
   mixins: [VueHowler],
   components: {Lyric,
@@ -23,18 +23,7 @@ export default {
       isHelp: false,
       instruments: 'guitar',
       bloomMenuIsOpen: false,
-      bloomItem: [
-        // {
-        //   name: 'muted',
-        //   icon: this.$store.state.muted ? 'android-volume-off' : 'android-volume-up',
-        //   onTap: this.toggleMute
-        // },
-        // {
-        //   name: 'loop',
-        //   icon: this.$store.state.beLoop ? 'loop' : 'refresh',
-        //   onTap: this.toggleLoop
-        // }
-      ]
+      bloomItem: []
     }
   },
   mounted () {
@@ -46,7 +35,7 @@ export default {
       this.setSeek(time)
     },
     onChangeInstruments () {
-      if (this.$store.state.instuments === 'guitar' ) {
+      if (this.$store.state.instuments === 'guitar') {
         this.$store.state.instuments = 'ukulele'
       } else {
         this.$store.state.instuments = 'guitar'

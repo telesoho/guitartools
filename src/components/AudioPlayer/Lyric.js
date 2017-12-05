@@ -16,6 +16,7 @@ function getContainTimeAttrElement (targetElement) {
 export default {
   props: {
     lyricSrc: [String],
+    chordSrc: [String],
     seek: Number,
     duration: Number,
     height: {
@@ -38,7 +39,7 @@ export default {
     }
   },
   created () {
-    this.loadLyric(this.lyricSrc)
+    this.loadLyric(this.lyricSrc, this.chordSrc)
   },
   mounted () {
     if (!this.iscroll) {
@@ -62,7 +63,6 @@ export default {
       if (this.focusIndex === null) {
         this.focusIndex = 0
       }
-
       /* While time changed bigger than one second trigger scroll */
       var focusTime = this.lyricData[this.focusIndex].time
       if (this.repeat.endIndex !== -1 && this.repeat.startIndex !== -1) {
@@ -84,7 +84,7 @@ export default {
   },
   updated () {
     if (this.lyricData.length > 0 && this.focusIndex === null) {
-      //renderUkuleleChord(this.$refs.lyric)
+      // renderUkuleleChord(this.$refs.lyric)
       renderGuitarChord(this.$refs.lyric)
       this.iscroll.refresh()
     }
@@ -131,17 +131,22 @@ export default {
       this.focusIndex = index
       this.scrollTo(this.lyricData[index].time)
     },
-    loadLyric (uri) {
-      return axios.get(uri)
+    loadLyric (lyricSrc, chordSrc) {
+      return axios.get(lyricSrc)
         .then(response => {
           var lyricContent = response.data
           this.focusIndex = null
-          this.lyricData = LyricParser.parse(lyricContent)
+          axios.get(chordSrc).then(response => {
+            this.lyricData = LyricParser.parse(lyricContent, response.data)
+          }).catch(error => {
+            console.log('ERROR: load chord failed', error)
+            this.lyricData = LyricParser.parse(lyricContent, '')
+          })
         })
         .catch(error => {
           console.log('ERROR: load lyric failed', error)
           var lyricContent = '[00:00.00]Not available'
-          this.lyricData = LyricParser.parse(lyricContent)
+          this.lyricData = LyricParser.parse(lyricContent, '')
         })
     },
     setAttributeByTime (time, attr, value) {

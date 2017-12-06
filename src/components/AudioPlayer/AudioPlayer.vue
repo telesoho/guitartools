@@ -10,7 +10,7 @@
       v-on:playFromHere="playFromHere"></Lyric>
     <BloomMenu ref='menu'>
       <i-circle slot='main'
-          :percent="progress*100" 
+          :percent="percent" 
           :size='50'
           :trail-width="10"
           :stroke-width="10"

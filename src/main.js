@@ -35,12 +35,6 @@ const store = new Vuex.Store({
     setLoop (state, loop) {
       this.state.beLoop = loop
     }
-  },
-  getters: {
-    // ...
-    getSeek: (state) => {
-      return state.seek
-    }
   }
 })
 

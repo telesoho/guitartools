@@ -26,6 +26,13 @@ export default {
       bloomItem: []
     }
   },
+  computed: {
+    percent () {
+      var per = (this.seek / this.duration) * 100
+      console.log(per)
+      return per
+    }
+  },
   mounted () {
     var leafname = this.sources[0].split('\\').pop().split('/').pop()
     document.title = leafname

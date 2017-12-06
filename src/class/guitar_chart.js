@@ -315,7 +315,6 @@ function createChordStructByName (chordName) {
   var tabKey = findTabKey(chord[0])
 
   var shape = tabKey + ':' + chord[1]
-  console.log(chordName, chord[0], tabKey, shape)
   return createChordStruct(chord[0], tabKey, shape)
 }
 

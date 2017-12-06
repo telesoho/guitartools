@@ -92,6 +92,7 @@ export default {
           interval: 1000 / 1000, // 4 times per second (4Hz)
           hook: () => {
             this.seek = this.$data._howl.seek()
+            this.$store.commit('setSeek', this.seek)
           }
         }
       },

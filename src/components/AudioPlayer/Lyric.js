@@ -89,8 +89,11 @@ export default {
   },
   updated () {
     if (this.lyricData.length > 0 && this.focusIndex === null) {
-      // renderUkuleleChord(this.$refs.lyric)
-      renderGuitarChord(this.$refs.lyric)
+      if (this.$store.state.instruments === 'ukulele') {
+        renderUkuleleChord(this.$refs.lyric)
+      } else if (this.$store.state.instruments === 'guitar') {
+        renderGuitarChord(this.$refs.lyric)
+      }
       this.iscroll.refresh()
     }
   },
@@ -128,7 +131,6 @@ export default {
         this.focusIndex === index) {
         return
       }
-      console.log(this.focusIndex, index)
       if (this.focusIndex !== null) {
         this.lyricData[this.focusIndex].focus = false
       }

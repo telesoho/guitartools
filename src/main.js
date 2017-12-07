@@ -23,9 +23,12 @@ const store = new Vuex.Store({
     seek: 0,
     muted: false,
     beLoop: false,
-    instruments: 'guitar'
+    instruments: 'ukulele'
   },
   mutations: {
+    setInstruments (state, instruments) {
+      this.state.instruments = instruments
+    },
     setSeek (state, seek) {
       this.state.seek = seek
     },

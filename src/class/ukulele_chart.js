@@ -148,11 +148,13 @@ var UkuleleChordChart = [
 // chordName will be:
 // C:maj C:min C#:7 C#:min7
 function createChordStructByName (chordName) {
-  if (chordName === 'N') {
-    return null
-  }
   var chord = chordName.split(':')
-  var ukuleleChordName = chord[0] + chord[1].replace('min', 'm').replace('maj', '')
+  var ukuleleChordName = 'N'
+  if (chord.length > 1) {
+    ukuleleChordName = chord[0] + chord[1].replace('min', 'm').replace('maj', '')
+  } else {
+    ukuleleChordName = chord[0]
+  }
   return createChordStruct(ukuleleChordName)
 }
 

@@ -21,17 +21,11 @@ export default {
     return {
       lyric: '',
       isHelp: false,
-      instruments: 'guitar',
       bloomMenuIsOpen: false,
       bloomItem: []
     }
   },
   computed: {
-    percent () {
-      var per = (this.seek / this.duration) * 100
-      console.log(per)
-      return per
-    }
   },
   mounted () {
     var leafname = this.sources[0].split('\\').pop().split('/').pop()
@@ -42,15 +36,13 @@ export default {
       this.setSeek(time)
     },
     onChangeInstruments () {
-      if (this.$store.state.instuments === 'guitar') {
-        this.$store.state.instuments = 'ukulele'
-      } else {
-        this.$store.state.instuments = 'guitar'
+      if (this.$store.state.instruments === 'guitar') {
+        this.$store.commit('setInstruments', 'ukulele')
+      } else if (this.$store.state.instruments === 'ukulele') {
+        this.$store.commit('setInstruments', 'guitar')
       }
-      this.instruments = this.$store.state.instuments
     },
     onHelp () {
-      console.log(this.$intro)
       this.$intro().setOptions(
         {
           showStepNumbers: false,

@@ -38,7 +38,6 @@ export default {
       }
     })
     this.$on('setAnime', animeParams => {
-      console.log('setAnime event', animeParams)
       for (var key in animeParams) {
         animeParams[key].targets = this.$el
       }

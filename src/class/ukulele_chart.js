@@ -205,14 +205,19 @@ function renderOneChordElement (element, chordStruct) {
   )
   chord.draw()
 
-  element.className += ' rendered'
+  if (element.className.indexOf('rendered') === -1) {
+    element.className += ' rendered'
+  }
 }
 
-function renderUkuleleChord (withinElement) {
+function renderUkuleleChord (withinElement, rerender = false) {
   withinElement = withinElement || document
   _.each(withinElement.getElementsByClassName('chord'), function (el) {
-    if (el.className.indexOf('rendered') > -1) {
+    if (rerender === false && el.className.indexOf('rendered') > -1) {
       return
+    }
+    if (rerender === true) {
+      el.innerHTML = ''
     }
     renderOneChord(el, el.getAttribute('chord'))
   })

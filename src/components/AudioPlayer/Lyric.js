@@ -56,6 +56,9 @@ export default {
     }
   },
   computed: {
+    instruments () {
+      return this.$store.state.instruments
+    },
     lyricHtml () {
       return this.lyricData
     },
@@ -64,6 +67,10 @@ export default {
     }
   },
   watch: {
+    instruments (newValue, oldValue) {
+      console.log(newValue, oldValue)
+      this.renderChords(true)
+    },
     seek (newValue, oldValue) {
       if (this.focusIndex === null) {
         this.focusIndex = 0
@@ -88,14 +95,7 @@ export default {
     }
   },
   updated () {
-    if (this.lyricData.length > 0 && this.focusIndex === null) {
-      if (this.$store.state.instruments === 'ukulele') {
-        renderUkuleleChord(this.$refs.lyric)
-      } else if (this.$store.state.instruments === 'guitar') {
-        renderGuitarChord(this.$refs.lyric)
-      }
-      this.iscroll.refresh()
-    }
+    this.renderChords()
   },
   methods: {
     getNextLyricTime (currentTime) {
@@ -250,6 +250,16 @@ export default {
       var strTime = timeElement.getAttribute('time')
       var time = Number(strTime)
       this.$emit('playFromHere', time)
+    },
+    renderChords (rerender = false) {
+      if (this.lyricData.length > 0) {
+        if (this.$store.state.instruments === 'ukulele') {
+          renderUkuleleChord(this.$refs.lyric, rerender)
+        } else if (this.$store.state.instruments === 'guitar') {
+          renderGuitarChord(this.$refs.lyric, rerender)
+        }
+        this.iscroll.refresh()
+      }
     }
   }
 }

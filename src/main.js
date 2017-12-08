@@ -5,12 +5,10 @@ import App from './App'
 import router from './router'
 import telesoho from './components'
 import Vuex from 'vuex'
-import iview from 'iview'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(telesoho)
-Vue.use(iview)
 
 // Prevents "elastic scrolling" on Safari
 document.addEventListener('touchmove', function (event) {
@@ -23,7 +21,7 @@ const store = new Vuex.Store({
     seek: 0,
     muted: false,
     beLoop: false,
-    instruments: 'ukulele'
+    instruments: 'guitar'
   },
   mutations: {
     setInstruments (state, instruments) {

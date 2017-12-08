@@ -1,6 +1,9 @@
 <template>
   <div ref='lyric' class='lyricWrap' :style="{'height': lyricHeight + 'px'}">
     <ul class='scroller' >
+      <p class="lyricRow"><H1>歌曲名：涙そうそう</H1></p>
+      <p class="lyricRow">演唱：千住明</p>
+      <p class="lyricRow">变调夹：3</p>
       <LyricRow class="lyricRow"
         v-touch:press="playFromHere" 
         v-touch:swipeleft="onSwipeLeft" 

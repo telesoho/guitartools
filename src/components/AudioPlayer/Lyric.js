@@ -68,7 +68,6 @@ export default {
   },
   watch: {
     instruments (newValue, oldValue) {
-      console.log(newValue, oldValue)
       this.renderChords(true)
     },
     seek (newValue, oldValue) {
@@ -84,8 +83,9 @@ export default {
           return
         }
       }
+
       if (Math.abs(newValue - focusTime) > 1) {
-        for (var i = this.lyricData.length - 1; i > 0; i--) {
+        for (var i = this.lyricData.length - 1; i >= 0; i--) {
           var lrc = this.lyricData[i]
           if (newValue >= lrc.time) {
             return this.focusIn(i)
@@ -120,7 +120,7 @@ export default {
       return e
     },
     scrollTo (showTime) {
-      if (!showTime) {
+      if (showTime === null) {
         return
       }
       var e = this.getElementByTime(showTime)
@@ -193,7 +193,6 @@ export default {
       this.showRepeat()
     },
     onSwipeRight (ev) {
-      console.log('swipe right to mark for repeating')
       var timeElement = getContainTimeAttrElement(ev.target)
       if (!timeElement) {
         return
@@ -236,7 +235,6 @@ export default {
       }
     },
     onSwipeLeft (ev) {
-      console.log('swipe left to clean repeat')
       this.clearAttrib('repeat')
       this.repeat.startIndex = -1
       this.repeat.endIndex = -1

@@ -10,7 +10,7 @@ export default {
   name: 'app',
   data () {
     return {
-      audioSources: ['https://raw.githubusercontent.com/telesoho/guitartools/hscroll/static/%E5%8D%83%E4%BD%8F%E6%98%8E-%E6%B6%99%E3%81%9D%E3%81%86%E3%81%9D%E3%81%86.mp3'],
+      audioSources: ['https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/千住明-涙そうそう.mp3'],
       lyricSrc: './static/千住明-涙そうそう.lrc',
       chordSrc: './static/song.chord.json'
     }
@@ -24,8 +24,21 @@ export default {
 </script>
 
 <style>
-body {
-user-select: none;
+article, aside, blockquote, body, button, dd, details, div, dl, dt, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, input, legend, li, menu, nav, ol, p, section, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
 }
-
+body {
+    margin: 0;
+    padding: 0;
+    display: block;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","\5FAE\8F6F\96C5\9ED1",Arial,sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #495060;
+    background-color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+}
 </style>

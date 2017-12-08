@@ -1,7 +1,10 @@
 import VueHowler from './VueHowler.js'
 import ChordStrip from './ChordStrip.vue'
 import Lyric from './Lyric.vue'
+import Button from '../Button/Button.vue'
+import Icon from '../Icon/Icon.vue'
 import BloomMenu from '../BloomMenu'
+import Circle from '../Circle/Circle.vue'
 import 'intro.js/introjs.css'
 import 'intro.js/themes/introjs-modern.css'
 
@@ -14,6 +17,9 @@ export default {
   mixins: [VueHowler],
   components: {Lyric,
     ChordStrip,
+    'TCircle': Circle,
+    'TButton': Button,
+    Icon,
     BloomMenu: BloomMenu,
     BloomItem: BloomMenu.Item
   },
@@ -28,7 +34,7 @@ export default {
   computed: {
   },
   mounted () {
-    var leafname = this.sources[0].split('\\').pop().split('/').pop()
+    var leafname = decodeURI(this.sources[0]).split('\\').pop().split('/').pop()
     document.title = leafname
   },
   methods: {

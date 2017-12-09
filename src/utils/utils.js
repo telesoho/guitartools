@@ -36,3 +36,44 @@ export function setAttribute (el, attr, value) {
   }
   return el.getAttribute(attr)
 }
+
+export function toggleClass (element, className) {
+  if (element === null) {
+    console.log('ERROR: element is empty.')
+    return
+  }
+  var classList = element.className.split(/\s+/)
+  var index = classList.indexOf(className)
+  if (index === -1) {
+    classList.push(className)
+  } else {
+    classList.splice(index)
+  }
+  element.className = classList.join(' ')
+}
+
+export function addClass (element, className) {
+  if (element === null) {
+    console.log('ERROR: element is empty.')
+    return
+  }
+  var classList = element.className.split(/\s+/)
+  var index = classList.indexOf(className)
+  if (index === -1) {
+    classList.push(className)
+    element.className = classList.join(' ')
+  }
+}
+
+export function removeClass (element, className) {
+  if (element === null) {
+    console.log('ERROR: element is empty.')
+    return
+  }
+  var classList = element.className.split(/\s+/)
+  var index = classList.indexOf(className)
+  if (index !== -1) {
+    classList.splice(index)
+    element.className = classList.join(' ')
+  }
+}

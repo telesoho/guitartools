@@ -7,6 +7,8 @@ import BloomMenu from '../BloomMenu'
 import Circle from '../Circle/Circle.vue'
 import 'intro.js/introjs.css'
 import 'intro.js/themes/introjs-modern.css'
+import {addClass, removeClass} from '../../utils/utils'
+import Vue from 'vue'
 
 export default {
   name: 'AudioPlayer',
@@ -31,22 +33,37 @@ export default {
       bloomItem: []
     }
   },
-  computed: {
-  },
   mounted () {
     var leafname = decodeURI(this.sources[0]).split('\\').pop().split('/').pop()
     document.title = leafname
+  },
+  computed: {
+    chordRendering () {
+      return this.$store.state.chordRendering
+    }
+  },
+  watch: {
+    chordRendering (newValue, oldValue) {
+      if (newValue === true) {
+        addClass(this.$refs.instrumentsBtn.$el, 'fa-spin')
+      } else {
+        removeClass(this.$refs.instrumentsBtn.$el, 'fa-spin')
+      }
+    }
   },
   methods: {
     playFromHere (time) {
       this.setSeek(time)
     },
     onChangeInstruments () {
-      if (this.$store.state.instruments === 'guitar') {
-        this.$store.commit('setInstruments', 'ukulele')
-      } else if (this.$store.state.instruments === 'ukulele') {
-        this.$store.commit('setInstruments', 'guitar')
-      }
+      Vue.store.commit('setChordRendering', true)
+      setTimeout(function () {
+        if (Vue.store.state.instruments === 'guitar') {
+          Vue.store.commit('setInstruments', 'ukulele')
+        } else if (Vue.store.state.instruments === 'ukulele') {
+          Vue.store.commit('setInstruments', 'guitar')
+        }
+      }, 1000)
     },
     onHelp () {
       this.$intro().setOptions(

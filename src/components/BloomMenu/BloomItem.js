@@ -21,7 +21,6 @@ export default {
     }
   },
   mounted () {
-    console.log('mounted', this.$options.name)
     this.$on('on-update-active-name', name => {
       if (this.name === name) {
         this.active = true

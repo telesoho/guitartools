@@ -29,7 +29,7 @@
         <TButton slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" v-touch:tap="toggleMute" :icon="this.$store.state.muted ? 'volume-off' : 'volume-on'"></TButton>
       </BloomItem>
       <BloomItem ref='instruments' slot='BloomItems' name='instruments' data-intro='乐器切换按钮<BR>点击：切换和弦显示方式为吉他或尤克里里' data-tooltipClass='intro-tooltip-instruments'>
-        <TButton slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" v-touch:tap="onChangeInstruments" :icon='this.$store.state.instruments'></TButton>
+        <TButton slot='button' class='blooming-menu__item-btn' ref='instrumentsBtn' type="ghost" shape="circle" v-touch:tap="onChangeInstruments" :icon='this.$store.state.instruments'></TButton>
       </BloomItem>
       <BloomItem ref='help' slot='BloomItems' name='help' data-intro='帮助按钮<BR>点击：显示帮助' data-tooltipClass='intro-tooltip-help'>
         <TButton slot='button' class='blooming-menu__item-btn' type="ghost" shape="circle" v-touch:tap="onHelp" icon="help"></TButton>

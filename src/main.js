@@ -3,40 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store/store'
 import telesoho from './components'
-import Vuex from 'vuex'
 
 Vue.config.productionTip = false
-Vue.use(Vuex)
 Vue.use(telesoho)
+Vue.store = store
 
 // Prevents "elastic scrolling" on Safari
 document.addEventListener('touchmove', function (event) {
   'use strict'
   event.preventDefault()
-})
-
-const store = new Vuex.Store({
-  state: {
-    seek: 0,
-    muted: false,
-    beLoop: false,
-    instruments: 'guitar'
-  },
-  mutations: {
-    setInstruments (state, instruments) {
-      this.state.instruments = instruments
-    },
-    setSeek (state, seek) {
-      this.state.seek = seek
-    },
-    setMuted (state, muted) {
-      this.state.muted = muted
-    },
-    setLoop (state, loop) {
-      this.state.beLoop = loop
-    }
-  }
 })
 
 /* eslint-disable no-new */

@@ -5,6 +5,7 @@ import LyricParser from './LyricParser'
 import _ from 'underscore'
 import * as utils from '../../utils/utils'
 import LyricRow from './LyricRow.vue'
+import Vue from 'vue'
 // import anime from 'animejs'
 
 function getContainTimeAttrElement (targetElement) {
@@ -69,6 +70,7 @@ export default {
   watch: {
     instruments (newValue, oldValue) {
       this.renderChords(true)
+      Vue.store.commit('setChordRendering', false)
     },
     seek (newValue, oldValue) {
       if (this.focusIndex === null) {

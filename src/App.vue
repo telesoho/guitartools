@@ -26,7 +26,7 @@ export default {
           capo: 3
         },
         {
-          src: 'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/風来坊.chord.json',
+          src: 'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/島唄.chord.json',
           capo: 1
         },
         {

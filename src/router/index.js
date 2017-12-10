@@ -4,12 +4,14 @@ import App from '../App'
 
 Vue.use(VueRouter)
 
-export default new VueRouter({
+const router = new VueRouter({
   routes: [
     {
-      path: '/:songid',
+      path: '/:songid?',
       name: 'songid',
       component: App
     }
   ]
 })
+
+export default router

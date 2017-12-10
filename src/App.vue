@@ -25,8 +25,11 @@ export default {
   },
   computed: {
     defaultSongId () {
-      console.log(this.$route.params.songid)
-      return parseInt(this.$route.params.songid)
+      var ret = parseInt(this.$route.params.songid)
+      if (!ret) {
+        ret = 0
+      }
+      return ret
     }
   },
   components: {

@@ -14,95 +14,136 @@ class LyricParser {
    *
    * @param {any} chordString
    * [{"end": 50(ms), "chord": "N", "start": 0}, {"end": 230,"chord": "F:maj","start": 50}, ...]
-   * @param {any} renderLineCallback
    * @return {list}
    * [{time: xxx, lrcHtml: xxx, focus:false} ...]
    * @memberof LyricParser
    */
-  parse (lrcString, chordString, renderLineCallback) {
-    var chordData = this.parseChordData(chordString, 3)
-    var lyricData = []
-    const lyric = lrcString.split('\n')
-    const lyricLen = lyric.length
+  parse (lrcString, chordString, capo = 0) {
+    try {
+      var retObj = {
+        title: '',
+        artist: '',
+        capo: capo,
+        lyricData: []
+      }
 
-    for (let i = 0; i < lyricLen; i++) {
-      // match lrc time
-      const lrcTimes = lyric[i].match(/\[(\d{2}):(\d{2})\.(\d{2,3})]/g)
-      // match lrc text
-      const lrcText = lyric[i].replace(/\[(\d{2}):(\d{2})\.(\d{2,3})]/g, '').replace(/^\s+|\s+$/g, '')
-      if (lrcTimes != null) {
-        // handle multiple time tag
-        const timeLen = lrcTimes.length
-        for (let j = 0; j < timeLen; j++) {
-          const oneTime = /\[(\d{2}):(\d{2})\.(\d{2,3})]/.exec(lrcTimes[j])
-          const lrcTime = (oneTime[1]) * 60 + parseInt(oneTime[2]) + parseInt(oneTime[3]) / ((oneTime[3] + '').length === 2 ? 100 : 1000)
+      var lyricData = []
+      const lyric = lrcString.split('\n')
 
-          lyricData.push({
-            time: lrcTime,
-            chords: [],
-            lrcText: lrcText,
-            focus: false
-          })
+      for (let i = 0; i < lyric.length; i++) {
+        const title = lyric[i].match(/\[ti:(.*?)\]/)
+        if (title != null) {
+          retObj.title = title[1]
+        }
+
+        const artist = lyric[i].match(/\[ar:(.*?)\]/)
+        if (artist != null) {
+          retObj.artist = artist[1]
+        }
+
+        const theCapo = lyric[i].match(/\[capo:(.*?)\]/)
+        if (theCapo != null) {
+          retObj.capo = parseInt(theCapo[0]) || capo
+        }
+        // const artist = lyric[i].match(/\[ar:(.*?)\]/g)
+
+        // match lrc time
+        const lrcTimes = lyric[i].match(/\[(\d{2}):(\d{2})\.(\d{2,3})]/g)
+        // match lrc text
+        const lrcText = lyric[i].replace(/\[(\d{2}):(\d{2})\.(\d{2,3})]/g, '').replace(/^\s+|\s+$/g, '')
+        if (lrcTimes != null) {
+          // handle multiple time tag
+          const timeLen = lrcTimes.length
+          for (let j = 0; j < timeLen; j++) {
+            const oneTime = /\[(\d{2}):(\d{2})\.(\d{2,3})]/.exec(lrcTimes[j])
+            const lrcTime = (oneTime[1]) * 60 + parseInt(oneTime[2]) + parseInt(oneTime[3]) / ((oneTime[3] + '').length === 2 ? 100 : 1000)
+            lyricData.push({
+              time: lrcTime,
+              chords: [],
+              lrcText: lrcText.replace(/<\d+>/g, ''),
+              focus: false,
+              endTime: lrcTime * 100
+            })
+          }
         }
       }
+      // sort by time
+      lyricData.sort((a, b) => {
+        var ret = a.time - b.time
+        return ret
+      })
+
+      var chordData = this.parseChordData(chordString, retObj.capo)
+
+      var chordIndex = 0
+      var newChordData = []
+      var lyricIndex = 1
+
+      if (chordIndex < chordData.length) {
+        var chord = chordData[chordIndex]
+        var data = lyricData[lyricIndex]
+        var lastLrcTime = lyricData[lyricIndex - 1].time * 100
+        var theLrcTime = data.time * 100
+
+        while (lyricIndex < lyricData.length) {
+          data = lyricData[lyricIndex]
+          theLrcTime = data.time * 100
+          lyricData[lyricIndex - 1].endTime = theLrcTime
+
+          // 和弦小于歌词时间段，直接追加和弦
+          if (chord.end < theLrcTime) {
+            newChordData.push(chord)
+            chordIndex++
+            if (chordIndex >= chordData.length) {
+              break
+            }
+            chord = chordData[chordIndex]
+          } else if (lastLrcTime <= chord.start && chord.end <= theLrcTime) {
+            // 和弦在歌词区域，不需要拆分，则追加
+            newChordData.push(chord)
+            chordIndex++
+            if (chordIndex >= chordData.length) {
+              break
+            }
+            chord = chordData[chordIndex]
+          } else if (chord.start < theLrcTime && theLrcTime < chord.end) {
+            // 拆分和弦
+            var newChord1 = Object.assign({}, chord)
+            newChord1.end = theLrcTime
+            newChordData.push(newChord1)
+
+            chord.start = theLrcTime
+            lastLrcTime = theLrcTime
+            lyricIndex++
+          } else if (chord.start >= theLrcTime) {
+            // 如果和弦大于该行歌词范围，直接读取下一行歌词
+            lastLrcTime = theLrcTime
+            lyricIndex++
+          }
+        }
+        lyricData[lyricIndex - 1].endTime = 999999999
+      }
+      while (chordIndex < chordData.length) {
+        newChordData.push(chordData[chordIndex++])
+      }
+      console.log(newChordData)
+
+      lyricData.forEach(data => {
+        // 计算上句歌词的和弦列表
+        var startLrcTime = data.time * 100
+        newChordData.forEach((chord) => {
+          if (chord.start >= startLrcTime && chord.start < data.endTime) {
+            data.chords.push(chord)
+          }
+        })
+      })
+
+      retObj.lyricData = lyricData
+      return retObj
+    } catch (error) {
+      console.log(error)
+      return retObj
     }
-    // sort by time
-    lyricData.sort((a, b) => {
-      var ret = a.time - b.time
-      return ret
-    })
-
-    var chordIndex = 0
-    var chordLen = chordData.length
-    var newChordData = []
-    lyricData.forEach(data => {
-      var lrcTime100 = data.time * 100
-      while (chordIndex < chordLen) {
-        var chord = chordData[chordIndex]
-        if (lrcTime100 > chord.start && lrcTime100 < chord.end) {
-          var newChord1 = Object.assign({}, chord)
-          var newChord2 = Object.assign({}, chord)
-          newChord1.end = lrcTime100
-          newChord2.start = lrcTime100
-          newChordData.push(newChord1, newChord2)
-          chordIndex++
-          break
-        } else if (lrcTime100 === chord.start || lrcTime100 === chord.end) {
-          newChordData.push(chord)
-          chordIndex++
-          break
-        }
-        newChordData.push(chord)
-        chordIndex++
-      }
-    })
-    chordData = newChordData
-    var lastLyricData = null
-    chordLen = chordData.length
-    chordIndex = 0
-    var lastChords = []
-    lyricData.forEach(data => {
-      // 计算上句歌词的和弦列表
-      var lrcTime100 = data.time * 100
-      lastChords = []
-      while (chordIndex < chordLen) {
-        var chord = chordData[chordIndex]
-        if (chord.start >= lrcTime100) {
-          break
-        } else {
-          lastChords.push(chord)
-          chordIndex++
-        }
-      }
-
-      if (lastLyricData !== null) {
-        lastLyricData.chords = lastChords
-      }
-      lastLyricData = data
-    })
-    // 设置最后一句歌词的和弦
-    lastChords.chords = lastChords
-    return lyricData
   }
 
   /**

@@ -1,5 +1,4 @@
 import VueHowler from './VueHowler.js'
-import ChordStrip from './ChordStrip.vue'
 import Lyric from './Lyric.vue'
 import Button from '../Button/Button.vue'
 import Icon from '../Icon/Icon.vue'
@@ -32,7 +31,6 @@ export default {
   },
   mixins: [VueHowler],
   components: {Lyric,
-    ChordStrip,
     'TCircle': Circle,
     'TButton': Button,
     Icon,
@@ -58,8 +56,8 @@ export default {
   },
   watch: {
     songId (newValue, oldValue) {
-      var leafname = decodeURI(this.songSrc[this.songId]).split('\\').pop().split('/').pop()
-      document.title = leafname
+      // var leafname = decodeURI(this.songSrc[this.songId]).split('\\').pop().split('/').pop()
+      // document.title = leafname
       this.sources = [this.songSrc[this.songId]]
     },
     chordRendering (newValue, oldValue) {

@@ -12,14 +12,20 @@ export default {
     return {
       songSrc: [
         'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/千住明-涙そうそう.mp3',
-        './static/島唄.mp3'],
+        'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/島唄.mp3'],
       lyricSrc: [
-        './static/千住明-涙そうそう.lrc',
-        './static/島唄.xtrc'
+        'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/千住明-涙そうそう.lrc',
+        'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/島唄.xtrc'
       ],
       chordSrc: [
-        './static/千住明-涙そうそう.chord.json',
-        './static/島唄.chord.json'
+        {
+          src: 'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/千住明-涙そうそう.chord.json',
+          capo: 3
+        },
+        {
+          src: 'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/島唄.chord.json',
+          capo: 1
+        }
       ]
     }
   },

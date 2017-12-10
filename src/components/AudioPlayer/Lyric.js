@@ -19,6 +19,10 @@ export default {
   props: {
     lyricSrc: [String],
     chordSrc: [String],
+    defaultCapo: {
+      type: Number,
+      default: 0
+    },
     seek: Number,
     duration: Number,
     height: {
@@ -32,6 +36,9 @@ export default {
   data () {
     return {
       focusIndex: 0,
+      title: '',
+      artist: '',
+      capo: 0,
       lyricData: [{
         time: 0,
         chords: [],
@@ -146,7 +153,13 @@ export default {
           var lyricContent = response.data
           this.focusIndex = null
           axios.get(chordSrc).then(response => {
-            this.lyricData = LyricParser.parse(lyricContent, response.data)
+            var ret = LyricParser.parse(lyricContent, response.data, this.defaultCapo)
+            console.log(ret)
+            this.title = ret.title
+            this.artist = ret.artist
+            this.capo = ret.capo
+            document.title = this.title
+            this.lyricData = ret.lyricData
           }).catch(error => {
             console.log('ERROR: load chord failed', error)
             this.lyricData = LyricParser.parse(lyricContent, '')

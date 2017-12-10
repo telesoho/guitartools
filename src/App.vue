@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AudioPlayer :sources="audioSources" :lyricSrc='lyricSrc' :chordSrc='chordSrc'></AudioPlayer>
+    <AudioPlayer :songSrc="songSrc" :defaultSongId='defaultSongId' :lyricSrc='lyricSrc' :chordSrc='chordSrc'></AudioPlayer>
   </div>
 </template>
 <script>
@@ -10,15 +10,31 @@ export default {
   name: 'app',
   data () {
     return {
-      audioSources: ['https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/千住明-涙そうそう.mp3'],
-      lyricSrc: './static/千住明-涙そうそう.lrc',
-      chordSrc: './static/song.chord.json'
+      songSrc: [
+        'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/千住明-涙そうそう.mp3',
+        './static/島唄.mp3'],
+      lyricSrc: [
+        './static/千住明-涙そうそう.lrc',
+        './static/島唄.xtrc'
+      ],
+      chordSrc: [
+        './static/千住明-涙そうそう.chord.json',
+        './static/島唄.chord.json'
+      ]
+    }
+  },
+  computed: {
+    defaultSongId () {
+      console.log(this.$route.params.songid)
+      return parseInt(this.$route.params.songid)
     }
   },
   components: {
     AudioPlayer
   },
   methods: {
+  },
+  mounted () {
   }
 }
 </script>

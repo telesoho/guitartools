@@ -6,19 +6,6 @@ import assign from 'object-assign'
 export default {
   props: {
     /**
-     * An array of audio file urls
-     */
-    sources: {
-      type: Array,
-      required: true,
-      validator (sources) {
-        // Every source must be a non-empty string
-        return sources.every(
-          source => typeof source === 'string' && source.length > 0
-        )
-      }
-    },
-    /**
      * Whether to start the playback
      * when the component is mounted
      */
@@ -53,6 +40,10 @@ export default {
 
   data () {
     return {
+      /**
+       * An array of audio file urls
+       */
+      sources: [],
       /**
        * The Howl instance used for playback
        */
@@ -169,9 +160,9 @@ export default {
     }
   },
 
-  created () {
-    this._initialize()
-  },
+  // created () {
+  //   this._initialize()
+  // },
 
   beforeDestroy () {
     this._cleanup()

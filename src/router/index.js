@@ -1,15 +1,15 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import BloomMenu from '../components/BloomMenu'
+import VueRouter from 'vue-router'
+import App from '../App'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default new Router({
+export default new VueRouter({
   routes: [
     {
-      path: '/Menu',
-      name: 'Menu',
-      component: BloomMenu
+      path: '/:songid',
+      name: 'songid',
+      component: App
     }
   ]
 })

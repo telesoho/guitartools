@@ -13,8 +13,22 @@ import Vue from 'vue'
 export default {
   name: 'AudioPlayer',
   props: {
-    lyricSrc: [String],
-    chordSrc: [String]
+    songSrc: {
+      type: Array,
+      required: true,
+      validator (sources) {
+        // Every source must be a non-empty string
+        return sources.every(
+          source => typeof source === 'string' && source.length > 0
+        )
+      }
+    },
+    lyricSrc: [Array],
+    chordSrc: [Array],
+    defaultSongId: {
+      type: Number,
+      default: 0
+    }
   },
   mixins: [VueHowler],
   components: {Lyric,
@@ -30,12 +44,12 @@ export default {
       lyric: '',
       isHelp: false,
       bloomMenuIsOpen: false,
+      songId: this.defaultSongId,
       bloomItem: []
     }
   },
   mounted () {
-    var leafname = decodeURI(this.sources[0]).split('\\').pop().split('/').pop()
-    document.title = leafname
+    this.sources = [this.songSrc[this.songId]]
   },
   computed: {
     chordRendering () {
@@ -43,6 +57,11 @@ export default {
     }
   },
   watch: {
+    songId (newValue, oldValue) {
+      var leafname = decodeURI(this.songSrc[this.songId]).split('\\').pop().split('/').pop()
+      document.title = leafname
+      this.sources = [this.songSrc[this.songId]]
+    },
     chordRendering (newValue, oldValue) {
       if (newValue === true) {
         addClass(this.$refs.instrumentsBtn.$el, 'fa-spin')

@@ -43,7 +43,7 @@ class LyricParser {
 
         const theCapo = lyric[i].match(/\[capo:(.*?)\]/)
         if (theCapo != null) {
-          retObj.capo = parseInt(theCapo[0]) || capo
+          retObj.capo = parseInt(theCapo[1]) || capo
         }
         // const artist = lyric[i].match(/\[ar:(.*?)\]/g)
 

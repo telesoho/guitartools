@@ -13,12 +13,20 @@ export default {
       songSrc: [
         'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/千住明-涙そうそう.mp3',
         'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/島唄.mp3',
-        'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/風来坊.mp3'
+        'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/風来坊.mp3',
+        './static/Hoedown-Throwdown.mp3',
+        './static/Let It Go.mp3',
+        './static/借我.mp3',
+        './static/小幸运.mp3'
       ],
       lyricSrc: [
         'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/千住明-涙そうそう.lrc',
         'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/島唄.xtrc',
-        'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/風来坊.xtrc'
+        'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/風来坊.xtrc',
+        './static/Hoedown-Throwdown.xlrc',
+        './static/Let It Go.xlrc',
+        './static/借我.trc',
+        './static/小幸运.trc'
       ],
       chordSrc: [
         {
@@ -31,6 +39,22 @@ export default {
         },
         {
           src: 'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/風来坊.chord.json',
+          capo: 0
+        },
+        {
+          src: './static/Hoedown-Throwdown.chord.json',
+          capo: 0
+        },
+        {
+          src: './static/Let It Go.chord.json',
+          capo: 0
+        },
+        {
+          src: './static/借我.chord.json',
+          capo: 0
+        },
+        {
+          src: './static/小幸运.chord.json',
           capo: 0
         }
       ]

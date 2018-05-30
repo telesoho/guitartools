@@ -154,7 +154,6 @@ export default {
           this.focusIndex = null
           axios.get(chordSrc).then(response => {
             var ret = LyricParser.parse(lyricContent, response.data, this.defaultCapo)
-            console.log(ret)
             this.title = ret.title
             this.artist = ret.artist
             this.capo = ret.capo
@@ -162,13 +161,19 @@ export default {
             this.lyricData = ret.lyricData
           }).catch(error => {
             console.log('ERROR: load chord failed', error)
-            this.lyricData = LyricParser.parse(lyricContent, '')
+            var ret = LyricParser.parse(lyricContent, '[{"start": 0, "end": 10, "chord": "N"}]', this.defaultCapo)
+            this.title = ret.title
+            this.artist = ret.artist
+            this.capo = ret.capo
+            document.title = this.title
+            this.lyricData = ret.lyricData
           })
         })
         .catch(error => {
           console.log('ERROR: load lyric failed', error)
-          var lyricContent = '[00:00.00]Not available'
-          this.lyricData = LyricParser.parse(lyricContent, '')
+          var lyricContent = '[00:00.00]\n[00:10.00]'
+          var ret = LyricParser.parse(lyricContent, '[{"start": 0, "end": 10, "chord": "N"}]')
+          this.lyricData = ret.lyricData
         })
     },
     setAttributeByTime (time, attr, value) {

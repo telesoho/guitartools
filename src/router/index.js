@@ -10,6 +10,11 @@ const router = new VueRouter({
       path: '/:songid?',
       name: 'songid',
       component: App
+    },
+    {
+      path: '/songname/:songname?',
+      name: 'songname',
+      component: App
     }
   ]
 })

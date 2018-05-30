@@ -126,7 +126,7 @@ class LyricParser {
       while (chordIndex < chordData.length) {
         newChordData.push(chordData[chordIndex++])
       }
-      console.log(newChordData)
+      // console.log(newChordData)
 
       lyricData.forEach(data => {
         // 计算上句歌词的和弦列表
@@ -198,28 +198,33 @@ class LyricParser {
    */
   parseChordData (content, capo = 0) {
     var jsonObj = null
-    if (typeof content === 'string') {
-      jsonObj = JSON.parse(content)
-    } else {
-      jsonObj = content
-    }
-    this.duration = 0
-    for (var key in jsonObj) {
-      var item = jsonObj[key]
-      if (item.chord === 'N') {
-        item.name = 'Intro'
+    try {
+      if (typeof content === 'string') {
+        jsonObj = JSON.parse(content)
       } else {
-        var chordArray = item.chord.split(':')
-        var chordKey = this.getCapoKey(chordArray[0], capo)
-        var chordShap = chordArray[1]
-        item.chord = `${chordKey}:${chordShap}`
-        var shortChordShap = chordShap.replace('maj', '').replace('min', 'm')
-        item.name = chordKey + shortChordShap
+        jsonObj = content
       }
-      // item.width = item.end - item.start
-      // this.duration += item.width
+      this.duration = 0
+      for (var key in jsonObj) {
+        var item = jsonObj[key]
+        if (item.chord === 'N') {
+          item.name = 'Intro'
+        } else {
+          var chordArray = item.chord.split(':')
+          var chordKey = this.getCapoKey(chordArray[0], capo)
+          var chordShap = chordArray[1]
+          item.chord = `${chordKey}:${chordShap}`
+          var shortChordShap = chordShap.replace('maj', '').replace('min', 'm')
+          item.name = chordKey + shortChordShap
+        }
+        // item.width = item.end - item.start
+        // this.duration += item.width
+      }
+      return jsonObj
+    } catch (err) {
+      console.log(err)
+      return null
     }
-    return jsonObj
   }
 }
 

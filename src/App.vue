@@ -6,6 +6,8 @@
 <script>
 import AudioPlayer from './components/AudioPlayer/AudioPlayer.vue'
 
+const SONG_SERVER = 'https://raw.githubusercontent.com/telesoho/guitartools/master/docs/static/'
+
 export default {
   name: 'app',
   data () {
@@ -74,7 +76,17 @@ export default {
   },
   methods: {
   },
-  mounted () {
+  created () {
+    if (!this.$route.params.songid) {
+      var songname = this.$route.params.songname
+      this.$data.songSrc = [SONG_SERVER + songname]
+      this.$data.lyricSrc = [SONG_SERVER + songname + '.lrc']
+      this.$data.chordSrc = [{
+        src: SONG_SERVER + songname + '.chord.json',
+        capo: 0
+      }]
+      console.log(this.$data)
+    }
   }
 }
 </script>
